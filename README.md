@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NavHub
+
+NavHub is a developer navigation homepage where you can discover, share, and organize the best developer tools and resources.
+
+## Features
+
+- **Discover**: Browse curated websites by category (AI, Open Source, Dev Tools, etc.)
+- **Search**: Fast search across all resources
+- **Submit**: Users can submit new websites for approval
+- **Favorites**: Save your favorite tools for quick access
+- **Admin Dashboard**: Admins can approve or reject submissions
+- **Authentication**: GitHub OAuth integration
+
+## Tech Stack
+
+- **Framework**: Next.js 15+ (App Router)
+- **Database**: SQLite with Prisma ORM
+- **Auth**: NextAuth.js v5 (Beta)
+- **UI**: Tailwind CSS, shadcn/ui, Lucide Icons
+- **Type Safety**: TypeScript, Zod
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm/yarn/pnpm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables:
+   Copy `.env.example` (or create `.env`) with the following:
+
+```env
+DATABASE_URL="file:./prisma/dev.db"
+AUTH_SECRET="your-super-secret-key" # Generate with: openssl rand -base64 32
+AUTH_GITHUB_ID="your-github-client-id"
+AUTH_GITHUB_SECRET="your-github-client-secret"
+```
+
+4. Initialize the database:
+
+```bash
+npx prisma migrate dev
+npm run db:seed
+```
+
+5. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Administrative Access
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+By default, all users are regular `USER`. To access the Admin Dashboard at `/admin`, you need `ADMIN` role.
 
-## Learn More
+To promote a user to admin:
+1. Sign in with your GitHub account first (so your user record is created).
+2. Run the promotion script:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx tsx scripts/promote-admin.ts <your-email>
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Or manually update the database:
+```bash
+npx prisma studio
+# Find your user and change role from 'USER' to 'ADMIN'
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app`: App Router pages and API routes
+- `src/components`: React components (UI, Layout, Features)
+- `src/lib`: Utilities (Auth, Prisma, Utils)
+- `prisma`: Database schema and seeds
+- `scripts`: Helper scripts
