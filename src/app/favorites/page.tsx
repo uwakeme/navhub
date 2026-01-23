@@ -29,7 +29,7 @@ export default async function FavoritesPage() {
       
       {favorites.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-lg text-muted-foreground mb-4">You haven't favorited any websites yet.</p>
+          <p className="text-lg text-muted-foreground mb-4">You haven&apos;t favorited any websites yet.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

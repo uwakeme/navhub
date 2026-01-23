@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { WebsiteCard } from "@/components/website-card"
 import { Metadata } from "next"
+import { Prisma } from "@/generated/client"
 
 export const metadata: Metadata = {
   title: "NavHub - Discover Best Developer Tools",
@@ -20,7 +21,7 @@ export default async function Home(props: PageProps) {
   const q = searchParams.q
   const categorySlug = searchParams.category
 
-  const where: any = {
+  const where: Prisma.WebsiteWhereInput = {
     status: 'APPROVED',
   }
 
