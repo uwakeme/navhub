@@ -12,15 +12,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signIn, signOut, useSession } from "next-auth/react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
+import { useTranslations } from "next-intl"
 
 export function UserNav() {
   const { data: session } = useSession()
+  const tCommon = useTranslations("Common")
+  const tNav = useTranslations("Navigation")
 
   if (!session?.user) {
     return (
       <Button variant="default" onClick={() => signIn("github")}>
-        Login with GitHub
+        {tCommon("signIn")}
       </Button>
     )
   }
@@ -48,25 +51,25 @@ export function UserNav() {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/favorites">
-              Favorites
+              {tNav("favorites")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/submit">
-              Submit Website
+              {tNav("submit")}
             </Link>
           </DropdownMenuItem>
           {session.user.role === 'ADMIN' && (
              <DropdownMenuItem asChild>
                <Link href="/admin">
-                 Admin Dashboard
+                 {tNav("admin")}
                </Link>
              </DropdownMenuItem>
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
-          Log out
+          {tCommon("signOut")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

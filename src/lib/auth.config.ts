@@ -15,8 +15,12 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
-      const isOnAdmin = nextUrl.pathname.startsWith('/admin')
-      const isOnProtected = nextUrl.pathname.startsWith('/favorites') || nextUrl.pathname.startsWith('/submit')
+      
+      // Strip locale from pathname (e.g. /en/admin -> /admin)
+      const pathname = nextUrl.pathname.replace(/^\/(en|zh)/, '') || '/'
+      
+      const isOnAdmin = pathname.startsWith('/admin')
+      const isOnProtected = pathname.startsWith('/favorites') || pathname.startsWith('/submit')
       
       if (isOnAdmin) {
         // We can't check role easily here without JWT custom claims or DB

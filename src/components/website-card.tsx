@@ -2,13 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Heart } from "lucide-react"
+import { Heart } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { Website } from "@/generated/client"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 interface WebsiteCardProps {
   website: Website
@@ -19,13 +20,14 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
   const { data: session } = useSession()
   const [isFavorited, setIsFavorited] = useState(initialFavorited)
   const [isLoading, setIsLoading] = useState(false)
+  const t = useTranslations("Common")
 
   const toggleFavorite = async (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
     if (!session) {
-      toast.error("Please login to favorite websites")
+      toast.error(t("loginToFavorite"))
       return
     }
 
@@ -46,14 +48,14 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
     } catch (error) {
       // Revert on error
       setIsFavorited(!isFavorited)
-      toast.error("Something went wrong")
+      toast.error(t("genericError"))
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <Card className="flex flex-col h-full hover:shadow-lg transition-shadow group">
+    <Card className="flex flex-col h-full hover:shadow-lg transition-shadow group relative">
       <CardHeader className="flex-row gap-4 items-start space-y-0 pb-2">
         <div className="w-10 h-10 rounded-lg bg-muted p-1 shrink-0 overflow-hidden">
           {website.favicon ? (
@@ -86,22 +88,19 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
           {website.description}
         </p>
       </CardContent>
-      <CardFooter className="pt-0 flex justify-between gap-2">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="w-full justify-start text-muted-foreground group-hover:text-primary transition-colors"
-          asChild
-        >
-          <a href={website.url} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Visit
-          </a>
-        </Button>
+      {/* Overlay link for the whole card */}
+      <a 
+        href={website.url} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="absolute inset-0"
+        aria-label={`Visit ${website.title}`}
+      />
+      <CardFooter className="pt-0 flex justify-end gap-2 relative z-10">
         <Button
           variant="ghost"
           size="icon"
-          className="shrink-0"
+          className="shrink-0 hover:bg-background/80"
           onClick={toggleFavorite}
           disabled={isLoading}
         >

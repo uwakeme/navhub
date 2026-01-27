@@ -1,0 +1,61 @@
+{
+  "Common": {
+    "navHub": "NavHub",
+    "searchPlaceholder": "Search websites...",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "profile": "Profile",
+    "visit": "Visit",
+    "loginToFavorite": "Please login to favorite websites",
+    "genericError": "Something went wrong"
+  },
+  "Navigation": {
+    "discover": "Discover",
+    "submit": "Submit",
+    "favorites": "Favorites",
+    "admin": "Admin Dashboard"
+  },
+  "Sidebar": {
+    "categories": "Categories",
+    "all": "All"
+  },
+  "Home": {
+    "searchResult": "Search results for \"{query}\"",
+    "discover": "Discover",
+    "found": "{count} {count, plural, =1 {website} other {websites}} found",
+    "notFound": "No websites found matching your criteria."
+  },
+  "Submit": {
+    "title": "Submit a Website",
+    "description": "Share a useful developer tool with the community.",
+    "form": {
+      "title": "Website Title",
+      "url": "URL",
+      "description": "Description",
+      "category": "Category",
+      "submit": "Submit Website",
+      "submitting": "Submitting..."
+    },
+    "success": "Website submitted successfully!",
+    "error": "Failed to submit website."
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "tabs": {
+      "pending": "Pending Approval",
+      "all": "All Websites"
+    },
+    "table": {
+      "title": "Title",
+      "url": "URL",
+      "category": "Category",
+      "submittedBy": "Submitted By",
+      "status": "Status",
+      "actions": "Actions"
+    }
+  },
+  "Favorites": {
+    "title": "My Favorites",
+    "empty": "You haven't favorited any websites yet."
+  }
+}

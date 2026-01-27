@@ -1,0 +1,62 @@
+{
+  "Common": {
+    "navHub": "NavHub",
+    "searchPlaceholder": "搜索网站...",
+    "signIn": "登录",
+    "signOut": "退出登录",
+    "profile": "个人资料",
+    "visit": "访问",
+    "loginToFavorite": "请先登录",
+    "genericError": "出错了"
+  },
+  "Navigation": {
+    "discover": "发现",
+    "submit": "提交",
+    "favorites": "收藏",
+    "admin": "管理后台"
+  },
+  "Sidebar": {
+    "categories": "分类",
+    "all": "全部"
+  },
+  "Home": {
+    "searchResult": "\"{query}\" 的搜索结果",
+    "discover": "发现",
+    "found": "找到 {count} 个网站",
+    "notFound": "没有找到符合条件的网站。",
+    "noWebsites": "没有找到网站"
+  },
+  "Submit": {
+    "title": "提交网站",
+    "description": "与社区分享好用的开发者工具。",
+    "form": {
+      "title": "网站标题",
+      "url": "链接",
+      "description": "描述",
+      "category": "分类",
+      "submit": "提交网站",
+      "submitting": "提交中..."
+    },
+    "success": "网站提交成功！",
+    "error": "提交失败。"
+  },
+  "Admin": {
+    "title": "管理后台",
+    "tabs": {
+      "pending": "待审核",
+      "all": "所有网站"
+    },
+    "table": {
+      "title": "标题",
+      "url": "链接",
+      "category": "分类",
+      "submittedBy": "提交者",
+      "status": "状态",
+      "actions": "操作"
+    }
+  },
+  "Favorites": {
+    "title": "我的收藏",
+    "empty": "你还没有收藏任何网站。"
+  }
+}

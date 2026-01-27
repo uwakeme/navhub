@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { WebsiteCard } from "@/components/website-card"
 import { Metadata } from "next"
 import { Prisma } from "@/generated/client"
+import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {
   title: "NavHub - Discover Best Developer Tools",
@@ -13,13 +14,19 @@ interface PageProps {
     q?: string
     category?: string
   }>
+  params: Promise<{
+    locale: string
+  }>
 }
 
 export default async function Home(props: PageProps) {
   const searchParams = await props.searchParams
+  const params = await props.params
   const session = await auth()
   const q = searchParams.q
   const categorySlug = searchParams.category
+  
+  const t = await getTranslations({locale: params.locale, namespace: 'Home'})
 
   const where: Prisma.WebsiteWhereInput = {
     status: 'APPROVED',
@@ -72,16 +79,16 @@ export default async function Home(props: PageProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">
-          {currentCategory ? currentCategory.name : (q ? `Search results for "${q}"` : "Discover")}
+          {currentCategory ? currentCategory.name : (q ? t('searchResult', {query: q}) : t('discover'))}
         </h1>
         <p className="text-muted-foreground">
-          {websites.length} {websites.length === 1 ? 'website' : 'websites'} found
+          {t('found', {count: websites.length})}
         </p>
       </div>
 
       {websites.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-lg text-muted-foreground">No websites found matching your criteria.</p>
+          <p className="text-lg text-muted-foreground">{t('notFound')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
