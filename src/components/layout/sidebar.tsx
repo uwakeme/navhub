@@ -16,6 +16,18 @@ export async function Sidebar() {
     orderBy: { order: 'asc' },
   })
   const t = await getTranslations("Sidebar")
+  const tCategories = await getTranslations("Categories")
+
+  // Helper to safely get category translation
+  function getCategoryName(slug: string, defaultName: string): string {
+    try {
+      const translated = tCategories(slug)
+      // If translation returns the slug itself, it means no translation found
+      return translated === slug ? defaultName : translated
+    } catch {
+      return defaultName
+    }
+  }
 
   return (
     <div className="pb-12 w-64 border-r h-[calc(100vh-4rem)] hidden md:block overflow-y-auto">
@@ -34,6 +46,7 @@ export async function Sidebar() {
             </Link>
             {categories.map((category) => {
               const Icon = getIcon(category.icon)
+              const categoryName = getCategoryName(category.slug, category.name)
               return (
                 <Link
                   key={category.id}
@@ -41,7 +54,7 @@ export async function Sidebar() {
                   className="flex items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
                 >
                   <Icon className="mr-2 h-4 w-4" />
-                  {category.name}
+                  {categoryName}
                 </Link>
               )
             })}

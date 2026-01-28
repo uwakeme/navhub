@@ -12,29 +12,43 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { WebsiteActions } from "@/components/admin/website-actions"
+import { CategoryManager } from "@/components/admin/category-manager"
 import { Metadata } from "next"
 import { Prisma } from "@/generated/client"
+import { getTranslations } from "next-intl/server"
 
-export const metadata: Metadata = {
-  title: "Admin Dashboard - NavHub",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Admin')
+  return {
+    title: `${t('title')} - NavHub`,
+  }
 }
 
 type AdminWebsite = Prisma.WebsiteGetPayload<{
   include: { category: true, submittedBy: true }
 }>
 
-function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
+async function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
+  const t = await getTranslations('Admin')
+  const tCategories = await getTranslations('Categories')
+  
+  // Helper to get category name with translation
+  function getCategoryName(category: { slug: string; name: string }): string {
+    const translated = tCategories(category.slug)
+    return translated === category.slug ? category.name : translated
+  }
+  
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>URL</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Submitted By</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>{t('table.title')}</TableHead>
+            <TableHead>{t('table.url')}</TableHead>
+            <TableHead>{t('table.category')}</TableHead>
+            <TableHead>{t('table.submittedBy')}</TableHead>
+            <TableHead>{t('table.status')}</TableHead>
+            <TableHead className="text-right">{t('table.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,14 +58,14 @@ function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
               <TableCell className="max-w-[200px] truncate" title={website.url}>
                 {website.url}
               </TableCell>
-              <TableCell>{website.category.name}</TableCell>
-              <TableCell>{website.submittedBy?.name || 'Unknown'}</TableCell>
+              <TableCell>{getCategoryName(website.category)}</TableCell>
+              <TableCell>{website.submittedBy?.name || t('table.unknown')}</TableCell>
               <TableCell>
                 <Badge variant={
                   website.status === 'APPROVED' ? 'default' : 
                   website.status === 'PENDING' ? 'secondary' : 'destructive'
                 }>
-                  {website.status}
+                  {t(`status.${website.status}`)}
                 </Badge>
               </TableCell>
               <TableCell className="text-right">
@@ -62,7 +76,7 @@ function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
           {websites.length === 0 && (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                No websites found
+                {t('table.empty')}
               </TableCell>
             </TableRow>
           )}
@@ -79,34 +93,49 @@ export default async function AdminPage() {
     redirect('/')
   }
 
-  const pendingWebsites = await prisma.website.findMany({
-    where: { status: 'PENDING' },
-    include: { category: true, submittedBy: true },
-    orderBy: { createdAt: 'desc' }
-  })
+  const t = await getTranslations('Admin')
 
-  const allWebsites = await prisma.website.findMany({
-    include: { category: true, submittedBy: true },
-    orderBy: { createdAt: 'desc' },
-    take: 100 // Limit for now
-  })
+  const [pendingWebsites, allWebsites, categories] = await Promise.all([
+    prisma.website.findMany({
+      where: { status: 'PENDING' },
+      include: { category: true, submittedBy: true },
+      orderBy: { createdAt: 'desc' }
+    }),
+    prisma.website.findMany({
+      include: { category: true, submittedBy: true },
+      orderBy: { createdAt: 'desc' },
+      take: 100 // Limit for now
+    }),
+    prisma.category.findMany({
+      orderBy: { order: 'asc' },
+      include: {
+        _count: {
+          select: { websites: true }
+        }
+      }
+    })
+  ])
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
       </div>
 
       <Tabs defaultValue="pending" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="pending">Pending Approval ({pendingWebsites.length})</TabsTrigger>
-          <TabsTrigger value="all">All Websites</TabsTrigger>
+          <TabsTrigger value="pending">{t('tabs.pendingCount', { count: pendingWebsites.length })}</TabsTrigger>
+          <TabsTrigger value="all">{t('tabs.all')}</TabsTrigger>
+          <TabsTrigger value="categories">{t('tabs.categories')}</TabsTrigger>
         </TabsList>
         <TabsContent value="pending" className="space-y-4">
           <WebsiteTable websites={pendingWebsites} />
         </TabsContent>
         <TabsContent value="all" className="space-y-4">
           <WebsiteTable websites={allWebsites} />
+        </TabsContent>
+        <TabsContent value="categories" className="space-y-4">
+          <CategoryManager initialCategories={categories} />
         </TabsContent>
       </Tabs>
     </div>

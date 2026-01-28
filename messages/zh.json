@@ -19,6 +19,16 @@
     "categories": "分类",
     "all": "全部"
   },
+  "Categories": {
+    "ai-tools": "AI 工具",
+    "open-source": "开源项目",
+    "dev-tools": "开发者工具",
+    "design": "设计",
+    "productivity": "效率工具",
+    "learning": "学习资源",
+    "cloud": "云服务",
+    "community": "社区"
+  },
   "Home": {
     "searchResult": "\"{query}\" 的搜索结果",
     "discover": "发现",
@@ -59,7 +69,9 @@
     "title": "管理后台",
     "tabs": {
       "pending": "待审核",
-      "all": "所有网站"
+      "all": "所有网站",
+      "pendingCount": "待审核 ({count})",
+      "categories": "分类管理"
     },
     "table": {
       "title": "标题",
@@ -67,7 +79,45 @@
       "category": "分类",
       "submittedBy": "提交者",
       "status": "状态",
-      "actions": "操作"
+      "actions": "操作",
+      "empty": "没有找到网站",
+      "unknown": "未知",
+      "name": "名称",
+      "slug": "标识",
+      "description": "描述",
+      "icon": "图标",
+      "order": "排序",
+      "websitesCount": "网站数"
+    },
+    "status": {
+      "APPROVED": "已通过",
+      "PENDING": "待审核",
+      "REJECTED": "已拒绝"
+    },
+    "actions": {
+      "approve": "通过",
+      "reject": "拒绝",
+      "delete": "删除",
+      "edit": "编辑",
+      "create": "新建分类"
+    },
+    "toast": {
+      "approveSuccess": "网站已通过审核",
+      "rejectSuccess": "网站已拒绝",
+      "deleteSuccess": "网站已删除",
+      "error": "出错了",
+      "categoryCreated": "分类创建成功",
+      "categoryUpdated": "分类更新成功",
+      "categoryDeleted": "分类删除成功"
+    },
+    "categoryForm": {
+      "title": "分类",
+      "namePlaceholder": "例如：AI 工具",
+      "slugPlaceholder": "例如：ai-tools",
+      "descriptionPlaceholder": "分类描述...",
+      "iconPlaceholder": "图标名称（例如：Brain）",
+      "cancel": "取消",
+      "save": "保存"
     }
   },
   "Favorites": {

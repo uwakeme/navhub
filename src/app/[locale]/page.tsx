@@ -74,12 +74,20 @@ export default async function Home(props: PageProps) {
       where: { slug: categorySlug }
     })
   }
+  
+  // Get category translation
+  const tCategories = await getTranslations("Categories")
+  const categoryDisplayName = currentCategory 
+    ? (tCategories(currentCategory.slug) === currentCategory.slug 
+        ? currentCategory.name 
+        : tCategories(currentCategory.slug))
+    : null
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">
-          {currentCategory ? currentCategory.name : (q ? t('searchResult', {query: q}) : t('discover'))}
+          {categoryDisplayName ? categoryDisplayName : (q ? t('searchResult', {query: q}) : t('discover'))}
         </h1>
         <p className="text-muted-foreground">
           {t('found', {count: websites.length})}

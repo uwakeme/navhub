@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Check, X, Trash } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 interface WebsiteActionsProps {
   websiteId: string
@@ -12,6 +13,7 @@ interface WebsiteActionsProps {
 
 export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
   const router = useRouter()
+  const t = useTranslations('Admin')
 
   const handleAction = async (action: 'approve' | 'reject' | 'delete') => {
     try {
@@ -31,10 +33,13 @@ export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
 
       if (!res.ok) throw new Error('Action failed')
       
-      toast.success(`Website ${action}d successfully`)
+      const toastKey = action === 'approve' ? 'toast.approveSuccess' : 
+                       action === 'reject' ? 'toast.rejectSuccess' : 
+                       'toast.deleteSuccess'
+      toast.success(t(toastKey))
       router.refresh()
     } catch (error) {
-      toast.error('Something went wrong')
+      toast.error(t('toast.error'))
     }
   }
 
@@ -42,15 +47,33 @@ export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
     <div className="flex items-center gap-2">
       {status === 'PENDING' && (
         <>
-          <Button size="icon" variant="outline" className="h-8 w-8 text-green-600" onClick={() => handleAction('approve')}>
+          <Button 
+            size="icon" 
+            variant="outline" 
+            className="h-8 w-8 text-green-600" 
+            onClick={() => handleAction('approve')}
+            title={t('actions.approve')}
+          >
             <Check className="h-4 w-4" />
           </Button>
-          <Button size="icon" variant="outline" className="h-8 w-8 text-red-600" onClick={() => handleAction('reject')}>
+          <Button 
+            size="icon" 
+            variant="outline" 
+            className="h-8 w-8 text-red-600" 
+            onClick={() => handleAction('reject')}
+            title={t('actions.reject')}
+          >
             <X className="h-4 w-4" />
           </Button>
         </>
       )}
-      <Button size="icon" variant="destructive" className="h-8 w-8" onClick={() => handleAction('delete')}>
+      <Button 
+        size="icon" 
+        variant="destructive" 
+        className="h-8 w-8" 
+        onClick={() => handleAction('delete')}
+        title={t('actions.delete')}
+      >
         <Trash className="h-4 w-4" />
       </Button>
     </div>

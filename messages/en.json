@@ -19,6 +19,16 @@
     "categories": "Categories",
     "all": "All"
   },
+  "Categories": {
+    "ai-tools": "AI Tools",
+    "open-source": "Open Source",
+    "dev-tools": "Developer Tools",
+    "design": "Design",
+    "productivity": "Productivity",
+    "learning": "Learning",
+    "cloud": "Cloud Services",
+    "community": "Community"
+  },
   "Home": {
     "searchResult": "Search results for \"{query}\"",
     "discover": "Discover",
@@ -58,7 +68,9 @@
     "title": "Admin Dashboard",
     "tabs": {
       "pending": "Pending Approval",
-      "all": "All Websites"
+      "all": "All Websites",
+      "pendingCount": "Pending Approval ({count})",
+      "categories": "Categories"
     },
     "table": {
       "title": "Title",
@@ -66,7 +78,45 @@
       "category": "Category",
       "submittedBy": "Submitted By",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "empty": "No websites found",
+      "unknown": "Unknown",
+      "name": "Name",
+      "slug": "Slug",
+      "description": "Description",
+      "icon": "Icon",
+      "order": "Order",
+      "websitesCount": "Websites"
+    },
+    "status": {
+      "APPROVED": "Approved",
+      "PENDING": "Pending",
+      "REJECTED": "Rejected"
+    },
+    "actions": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create Category"
+    },
+    "toast": {
+      "approveSuccess": "Website approved successfully",
+      "rejectSuccess": "Website rejected successfully",
+      "deleteSuccess": "Website deleted successfully",
+      "error": "Something went wrong",
+      "categoryCreated": "Category created successfully",
+      "categoryUpdated": "Category updated successfully",
+      "categoryDeleted": "Category deleted successfully"
+    },
+    "categoryForm": {
+      "title": "Category",
+      "namePlaceholder": "e.g. AI Tools",
+      "slugPlaceholder": "e.g. ai-tools",
+      "descriptionPlaceholder": "Category description...",
+      "iconPlaceholder": "Icon name (e.g. Brain)",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   },
   "Favorites": {
