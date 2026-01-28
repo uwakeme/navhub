@@ -27,17 +27,32 @@
   },
   "Submit": {
     "title": "Submit a Website",
-    "description": "Share a useful developer tool with the community.",
+    "description": "Share a useful developer tool or resource with the community.",
     "form": {
       "title": "Website Title",
+      "titlePlaceholder": "e.g. Next.js",
+      "titleDescription": "The name of the website or tool.",
       "url": "URL",
+      "urlPlaceholder": "https://...",
       "description": "Description",
+      "descriptionPlaceholder": "Brief description of what this website does...",
       "category": "Category",
+      "categoryPlaceholder": "Select a category",
       "submit": "Submit Website",
       "submitting": "Submitting..."
     },
-    "success": "Website submitted successfully!",
-    "error": "Failed to submit website."
+    "validation": {
+      "title": "Title must be at least 2 characters.",
+      "url": "Please enter a valid URL.",
+      "description": "Description must be at least 10 characters.",
+      "category": "Please select a category."
+    },
+    "success": {
+      "message": "Website submitted successfully! It will be visible after approval."
+    },
+    "error": {
+      "message": "Something went wrong. Please try again."
+    }
   },
   "Admin": {
     "title": "Admin Dashboard",

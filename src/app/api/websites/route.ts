@@ -17,8 +17,14 @@ export async function POST(req: Request) {
     }
 
     // Auto-fetch favicon (simple version)
-    const domain = new URL(url).hostname
-    const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+    let favicon: string
+    try {
+      const domain = new URL(url).hostname
+      favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+    } catch (error) {
+      console.error('Invalid URL:', url)
+      return new NextResponse("Invalid URL format", { status: 400 })
+    }
 
     const website = await prisma.website.create({
       data: {
@@ -34,7 +40,18 @@ export async function POST(req: Request) {
 
     return NextResponse.json(website)
   } catch (error) {
-    console.error(error)
+    console.error("Website submission error:", error)
+    
+    // Check for specific database errors
+    if (error instanceof Error) {
+      if (error.message.includes('Unique constraint')) {
+        return new NextResponse("Website URL already exists", { status: 409 })
+      }
+      if (error.message.includes('Foreign key constraint')) {
+        return new NextResponse("Invalid category", { status: 400 })
+      }
+    }
+    
     return new NextResponse("Internal Error", { status: 500 })
   }
 }

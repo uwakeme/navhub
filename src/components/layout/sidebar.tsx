@@ -18,7 +18,7 @@ export async function Sidebar() {
   const t = await getTranslations("Sidebar")
 
   return (
-    <div className="pb-12 w-64 border-r min-h-screen hidden md:block">
+    <div className="pb-12 w-64 border-r h-[calc(100vh-4rem)] hidden md:block overflow-y-auto">
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">

@@ -48,9 +48,11 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
-            <div className="flex flex-1">
-              <Sidebar />
-              <main className="flex-1 p-6 bg-muted/10">
+            <div className="flex flex-1 relative">
+              <div className="sticky top-16 h-[calc(100vh-4rem)]">
+                <Sidebar />
+              </div>
+              <main className="flex-1 p-6 bg-muted/10 overflow-y-auto">
                 {children}
               </main>
             </div>

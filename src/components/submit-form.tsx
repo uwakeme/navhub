@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -46,9 +47,26 @@ interface SubmitFormProps {
 }
 
 export function SubmitForm({ categories }: SubmitFormProps) {
+  const t = useTranslations('Submit')
   const router = useRouter()
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  
+  const dynamicFormSchema = z.object({
+    title: z.string().min(2, {
+      message: t('validation.title'),
+    }),
+    url: z.string().url({
+      message: t('validation.url'),
+    }),
+    description: z.string().min(10, {
+      message: t('validation.description'),
+    }),
+    categoryId: z.string().min(1, {
+      message: t('validation.category'),
+    }),
+  })
+  
+  const form = useForm<z.infer<typeof dynamicFormSchema>>({
+    resolver: zodResolver(dynamicFormSchema),
     defaultValues: {
       title: "",
       url: "",
@@ -65,14 +83,25 @@ export function SubmitForm({ categories }: SubmitFormProps) {
       })
 
       if (!res.ok) {
-        throw new Error('Failed to submit')
+        const errorText = await res.text()
+        console.error('Submit error:', errorText)
+        if (res.status === 401) {
+          toast.error(t('error.unauthorized') || 'Please login to submit websites')
+        } else if (res.status === 400) {
+          toast.error(t('error.badRequest') || 'Invalid submission data')
+        } else if (res.status === 409) {
+          toast.error(t('error.duplicate') || 'Website already exists')
+        } else {
+          toast.error(t('error.serverError') || 'Server error. Please try again.')
+        }
+        return
       }
 
-      toast.success("Website submitted successfully! It will be visible after approval.")
+      toast.success(t('success.message'))
       form.reset()
       router.push('/')
     } catch (error) {
-      toast.error("Something went wrong. Please try again.")
+      toast.error(t('error.message'))
     }
   }
 
@@ -80,9 +109,9 @@ export function SubmitForm({ categories }: SubmitFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-2xl mx-auto py-10">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Submit a Website</h1>
+          <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-muted-foreground">
-            Share a useful developer tool or resource with the community.
+            {t('description')}
           </p>
         </div>
         
@@ -91,12 +120,12 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>{t('form.title')}</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Next.js" {...field} />
+                <Input placeholder={t('form.titlePlaceholder')} {...field} />
               </FormControl>
               <FormDescription>
-                The name of the website or tool.
+                {t('form.titleDescription')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -108,9 +137,9 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           name="url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>URL</FormLabel>
+              <FormLabel>{t('form.url')}</FormLabel>
               <FormControl>
-                <Input placeholder="https://..." {...field} />
+                <Input placeholder={t('form.urlPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -122,11 +151,11 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           name="categoryId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category</FormLabel>
+              <FormLabel>{t('form.category')}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder={t('form.categoryPlaceholder')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -147,10 +176,10 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t('form.description')}</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Brief description of what this website does..." 
+                  placeholder={t('form.descriptionPlaceholder')} 
                   className="resize-none"
                   {...field} 
                 />
@@ -160,7 +189,7 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           )}
         />
         
-        <Button type="submit">Submit Website</Button>
+        <Button type="submit">{t('form.submit')}</Button>
       </form>
     </Form>
   )

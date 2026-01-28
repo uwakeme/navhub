@@ -28,17 +28,32 @@
   },
   "Submit": {
     "title": "提交网站",
-    "description": "与社区分享好用的开发者工具。",
+    "description": "与社区分享好用的开发者工具和资源。",
     "form": {
       "title": "网站标题",
+      "titlePlaceholder": "例如：Next.js",
+      "titleDescription": "网站或工具的名称。",
       "url": "链接",
+      "urlPlaceholder": "https://...",
       "description": "描述",
+      "descriptionPlaceholder": "简要描述这个网站的功能...",
       "category": "分类",
+      "categoryPlaceholder": "选择分类",
       "submit": "提交网站",
       "submitting": "提交中..."
     },
-    "success": "网站提交成功！",
-    "error": "提交失败。"
+    "validation": {
+      "title": "标题至少需要2个字符。",
+      "url": "请输入有效的URL。",
+      "description": "描述至少需要10个字符。",
+      "category": "请选择一个分类。"
+    },
+    "success": {
+      "message": "网站提交成功！审核通过后将显示出来。"
+    },
+    "error": {
+      "message": "出错了，请重试。"
+    }
   },
   "Admin": {
     "title": "管理后台",

@@ -1,6 +1,12 @@
-import { PrismaClient } from '../src/generated/client'
+import { PrismaClient } from '../src/generated/client/client'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: "file:E:/projects/navigation_homepage/prisma/dev.db"
+    }
+  }
+})
 
 const categories = [
   { name: 'AI Tools', slug: 'ai-tools', description: 'Artificial Intelligence tools and platforms', icon: 'Brain', order: 1 },
