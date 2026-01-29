@@ -1,25 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
-import pg from 'pg'
-
-const { Pool } = pg
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
-  pool: pg.Pool | undefined
 }
 
-// Create connection pool for the adapter
-const pool = globalForPrisma.pool ?? new Pool({
-  connectionString: process.env.DATABASE_URL,
+// Create Prisma adapter with connection string (simpler API for v6)
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
 })
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.pool = pool
-}
-
-// Create Prisma adapter
-const adapter = new PrismaPg(pool)
 
 // Create Prisma Client with adapter
 export const prisma =
