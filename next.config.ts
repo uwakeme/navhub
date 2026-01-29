@@ -5,14 +5,12 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configure Node.js runtime for API routes (required for Prisma)
+  // Exclude @prisma/client from bundling (moved from experimental in Next.js 16)
+  serverExternalPackages: ['@prisma/client', 'prisma'],
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
     },
-    // Use Node.js runtime for server components (required for Prisma)
-    // Exclude @prisma/client from bundling to avoid Node.js built-in module issues
-    serverComponentsExternalPackages: ['@prisma/client', 'prisma'],
   },
 };
 
