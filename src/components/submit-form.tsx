@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
-import { Category } from "@/generated/client"
+import { Category } from "@prisma/client"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({

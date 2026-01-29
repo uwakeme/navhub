@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge"
 import { WebsiteActions } from "@/components/admin/website-actions"
 import { CategoryManager } from "@/components/admin/category-manager"
 import { Metadata } from "next"
-import { Prisma } from "@/generated/client"
+import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 
 export async function generateMetadata(): Promise<Metadata> {

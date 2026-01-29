@@ -45,7 +45,3 @@ prisma/dev.db
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Prisma generated client (generated fresh during build for correct platform binaries)
-/src/generated/client
-/src/generated/prisma

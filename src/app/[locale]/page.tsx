@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { WebsiteCard } from "@/components/website-card"
 import { Metadata } from "next"
-import { Prisma } from "@/generated/client"
+import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {

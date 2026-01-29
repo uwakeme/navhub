@@ -6,7 +6,7 @@ import { Heart } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
-import { Website } from "@/generated/client"
+import { Website } from "@prisma/client"
 import { useTranslations } from "next-intl"
 
 interface WebsiteCardProps {
