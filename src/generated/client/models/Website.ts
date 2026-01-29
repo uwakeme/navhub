@@ -696,6 +696,7 @@ export type WebsiteCreateOrConnectWithoutSubmittedByInput = {
 
 export type WebsiteCreateManySubmittedByInputEnvelope = {
   data: Prisma.WebsiteCreateManySubmittedByInput | Prisma.WebsiteCreateManySubmittedByInput[]
+  skipDuplicates?: boolean
 }
 
 export type WebsiteUpsertWithWhereUniqueWithoutSubmittedByInput = {
@@ -772,6 +773,7 @@ export type WebsiteCreateOrConnectWithoutCategoryInput = {
 
 export type WebsiteCreateManyCategoryInputEnvelope = {
   data: Prisma.WebsiteCreateManyCategoryInput | Prisma.WebsiteCreateManyCategoryInput[]
+  skipDuplicates?: boolean
 }
 
 export type WebsiteUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -1802,6 +1804,7 @@ export type WebsiteCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Websites.
    */
   data: Prisma.WebsiteCreateManyInput | Prisma.WebsiteCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1820,6 +1823,7 @@ export type WebsiteCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Websites.
    */
   data: Prisma.WebsiteCreateManyInput | Prisma.WebsiteCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

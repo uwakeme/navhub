@@ -3,12 +3,10 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Heart } from "lucide-react"
-import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { Website } from "@/generated/client"
-import Image from "next/image"
 import { useTranslations } from "next-intl"
 
 interface WebsiteCardProps {
@@ -45,7 +43,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
       if (!res.ok) {
         throw new Error('Failed to update favorite')
       }
-    } catch (error) {
+    } catch {
       // Revert on error
       setIsFavorited(!isFavorited)
       toast.error(t("genericError"))
@@ -65,7 +63,15 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
               alt={website.title}
               className="w-full h-full object-contain"
               onError={(e) => {
-                e.currentTarget.src = `https://www.google.com/s2/favicons?domain=${new URL(website.url).hostname}&sz=64`
+                // If favicon fails to load, show first letter as fallback
+                e.currentTarget.style.display = 'none'
+                const parent = e.currentTarget.parentElement
+                if (parent) {
+                  const fallback = document.createElement('div')
+                  fallback.className = 'w-full h-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm'
+                  fallback.textContent = website.title[0]
+                  parent.appendChild(fallback)
+                }
               }}
             />
           ) : (

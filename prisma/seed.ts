@@ -1,12 +1,11 @@
 import { PrismaClient } from '../src/generated/client/client'
+import { config } from 'dotenv'
+import { getFavicon } from '../src/lib/favicon'
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: "file:E:/projects/navigation_homepage/prisma/dev.db"
-    }
-  }
-})
+// Load .env file
+config({ path: '.env' })
+
+const prisma = new PrismaClient()
 
 const categories = [
   { name: 'AI Tools', slug: 'ai-tools', description: 'Artificial Intelligence tools and platforms', icon: 'Brain', order: 1 },
@@ -246,6 +245,95 @@ const websites = [
   { title: 'CSDN', url: 'https://blog.csdn.net', description: '中文开发者社区', categorySlug: 'community' },
   { title: '博客园', url: 'https://www.cnblogs.com', description: '技术博客平台', categorySlug: 'community' },
   { title: 'Product Hunt', url: 'https://www.producthunt.com', description: '产品发现平台', categorySlug: 'community' },
+  
+  // === 新增网站 (从 research.md 导入) ===
+  
+  // 开源项目 - 后端框架
+  { title: 'Tornado', url: 'https://www.tornadoweb.org', description: 'Python Web框架和异步库', categorySlug: 'open-source' },
+  { title: 'Beego', url: 'https://beego.vip', description: 'Go应用框架', categorySlug: 'open-source' },
+  { title: 'Cassandra', url: 'https://cassandra.apache.org', description: '高度可扩展的NoSQL数据库', categorySlug: 'open-source' },
+  { title: 'ArangoDB', url: 'https://www.arangodb.com', description: '多模型数据库', categorySlug: 'open-source' },
+  { title: 'LXC', url: 'https://linuxcontainers.org', description: 'Linux容器', categorySlug: 'open-source' },
+  
+  // 开源项目 - DevOps
+  { title: 'Datadog', url: 'https://www.datadoghq.com', description: '云监控平台', categorySlug: 'open-source' },
+  
+  // AI工具 - 大语言模型
+  { title: '百度智能云千帆', url: 'https://cloud.baidu.com', description: '百度大模型服务平台', categorySlug: 'ai-tools' },
+  { title: '阿里云通义千问', url: 'https://help.aliyun.com', description: '阿里大模型API', categorySlug: 'ai-tools' },
+  
+  // AI工具 - AI写作工具
+  { title: 'Writesonic', url: 'https://writesonic.com', description: 'AI写作助手', categorySlug: 'ai-tools' },
+  
+  // AI工具 - AI图像工具
+  { title: '讯飞智文', url: 'https://zhiwen.xfyun.cn', description: '讯飞AI内容生成', categorySlug: 'ai-tools' },
+  
+  // AI工具 - AI编程工具
+  { title: 'Figma', url: 'https://www.figma.com', description: '协作设计工具', categorySlug: 'ai-tools' },
+  
+  // 实用工具 - 开发工具
+  { title: 'Fiddler', url: 'https://www.telerik.com/fiddler', description: 'Web调试代理', categorySlug: 'dev-tools' },
+  
+  // 实用工具 - 设计工具
+  { title: 'Axure RP', url: 'https://www.axure.com', description: '原型设计工具', categorySlug: 'design' },
+  { title: 'Tailwind CSS Colors', url: 'https://tailwindcss.com/docs/customizing-colors', description: 'Tailwind配色', categorySlug: 'design' },
+  
+  // 实用工具 - 效率工具
+  { title: 'Teambition', url: 'https://teambition.com', description: '阿里项目管理', categorySlug: 'productivity' },
+  { title: 'Tapd', url: 'https://www.tapd.cn', description: '腾讯项目管理', categorySlug: 'productivity' },
+  { title: '为知笔记', url: 'https://www.wiz.cn', description: '个人知识管理', categorySlug: 'productivity' },
+  
+  // 实用工具 - 在线工具
+  { title: 'Zamzar', url: 'https://www.zamzar.com', description: '在线文件转换', categorySlug: 'productivity' },
+  { title: 'Convertio', url: 'https://convertio.co', description: '多格式转换', categorySlug: 'productivity' },
+  { title: '在线JSON转换', url: 'https://www.json.cn', description: 'JSON工具集', categorySlug: 'productivity' },
+  { title: '图片批量处理', url: 'https://www.tuyitu.com', description: '在线批量处理', categorySlug: 'productivity' },
+  { title: 'Exif remover', url: 'https://www.verexif.com', description: '去除图片元数据', categorySlug: 'productivity' },
+  { title: 'Handbrake', url: 'https://handbrake.fr', description: '视频转码工具', categorySlug: 'productivity' },
+  { title: 'FFmpeg', url: 'https://ffmpeg.org', description: '视频处理工具', categorySlug: 'productivity' },
+  { title: '在线视频剪辑', url: 'https://www.apowersoft.cn', description: '简单视频编辑', categorySlug: 'productivity' },
+  { title: '迅捷PDF转换器', url: 'https://app.xunjiepdf.com', description: 'PDF转换工具', categorySlug: 'productivity' },
+  { title: '在线解压', url: 'https://www.videoconverter.com', description: '在线解压工具', categorySlug: 'productivity' },
+  
+  // 学习资源 - 教程网站
+  { title: 'FreeCodeCamp', url: 'https://www.freecodecamp.org', description: '免费编程学习', categorySlug: 'learning' },
+  { title: 'YouTube', url: 'https://www.youtube.com', description: '全球视频平台', categorySlug: 'learning' },
+  { title: '腾讯课堂', url: 'https://ke.qq.com', description: '在线课程平台', categorySlug: 'learning' },
+  { title: 'TED Talks', url: 'https://www.ted.com/talks', description: '技术演讲', categorySlug: 'learning' },
+  
+  // 学习资源 - 电子书
+  { title: 'Leanpub', url: 'https://leanpub.com', description: '自出版电子书', categorySlug: 'learning' },
+  { title: '异步社区', url: 'https://www.broadview.com.cn', description: '人民邮电出版社', categorySlug: 'learning' },
+  
+  // 产品设计 - 需求管理
+  { title: 'Productboard', url: 'https://www.productboard.com', description: '产品管理平台', categorySlug: 'design' },
+  { title: 'Aha!', url: 'https://www.aha.io', description: '产品管理软件', categorySlug: 'design' },
+  { title: 'Pendo', url: 'https://www.pendo.io', description: '产品分析工具', categorySlug: 'design' },
+  
+  // 产品设计 - 用户研究
+  { title: 'UserTesting', url: 'https://www.usertesting.com', description: '用户测试平台', categorySlug: 'design' },
+  { title: 'Hotjar', url: 'https://www.hotjar.com', description: '用户行为分析', categorySlug: 'design' },
+  { title: 'Mixpanel', url: 'https://mixpanel.com', description: '产品分析', categorySlug: 'design' },
+  
+  // 产品设计 - 数据分析
+  { title: 'Google Analytics', url: 'https://analytics.google.com', description: '网站分析', categorySlug: 'design' },
+  { title: '友盟+', url: 'https://www.umeng.com', description: '数据分析平台', categorySlug: 'design' },
+  { title: 'GrowingIO', url: 'https://www.growingio.com', description: '数据分析平台', categorySlug: 'design' },
+  
+  // 产品设计 - 设计系统
+  { title: 'Human Interface Guidelines', url: 'https://developer.apple.com/design', description: 'Apple设计指南', categorySlug: 'design' },
+  { title: 'Polaris', url: 'https://polaris.shopify.com', description: 'Shopify设计系统', categorySlug: 'design' },
+  
+  // 产品设计 - 设计模板
+  { title: 'Figma模板', url: 'https://www.figma.com/community', description: 'Figma社区模板', categorySlug: 'design' },
+  
+  // 社区与资讯 - 技术社区
+  { title: 'PowerShell', url: 'https://docs.microsoft.com/powershell', description: '微软命令行', categorySlug: 'community' },
+  { title: 'Tabby', url: 'https://tabby.sh', description: '终端复选', categorySlug: 'community' },
+  
+  // 常用工具补充 - 桌面应用
+  { title: 'Rectangle', url: 'https://rectangleapp.com', description: '窗口管理', categorySlug: 'community' },
+  { title: 'Dash', url: 'https://kapeli.com/dash', description: 'API文档浏览器', categorySlug: 'community' },
 ]
 
 async function main() {
@@ -276,9 +364,8 @@ async function main() {
       continue
     }
     
-    // Generate favicon URL using Google's favicon service
-    const domain = new URL(website.url).hostname
-    const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+    // Fetch favicon from multiple services
+    const favicon = await getFavicon(new URL(website.url).hostname)
     
     await prisma.website.upsert({
       where: { url: website.url },

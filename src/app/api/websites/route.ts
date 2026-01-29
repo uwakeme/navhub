@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
+import { getFaviconFromUrl } from "@/lib/favicon"
 
 export async function POST(req: Request) {
   const session = await auth()
@@ -16,14 +17,20 @@ export async function POST(req: Request) {
       return new NextResponse("Missing required fields", { status: 400 })
     }
 
-    // Auto-fetch favicon (simple version)
-    let favicon: string
+    // Auto-fetch favicon from multiple services
+    let favicon: string | null = null
     try {
-      const domain = new URL(url).hostname
-      favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+      favicon = await getFaviconFromUrl(url)
+      
+      // 如果所有服务都失败，使用默认图标（首字母）
+      if (!favicon) {
+        console.warn(`Failed to fetch favicon for ${url}, will use default`)
+        favicon = null // Will trigger default icon in frontend
+      }
     } catch (error) {
-      console.error('Invalid URL:', url)
-      return new NextResponse("Invalid URL format", { status: 400 })
+      console.error('Error fetching favicon:', error)
+      // Continue without favicon - it's not critical
+      favicon = null
     }
 
     const website = await prisma.website.create({
