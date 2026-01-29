@@ -46,6 +46,7 @@
       "urlPlaceholder": "https://...",
       "description": "Description",
       "descriptionPlaceholder": "Brief description of what this website does...",
+      "descriptionHint": "Optional - will be auto-filled from the website if not provided",
       "category": "Category",
       "categoryPlaceholder": "Select a category",
       "submit": "Submit Website",
@@ -54,7 +55,6 @@
     "validation": {
       "title": "Title must be at least 2 characters.",
       "url": "Please enter a valid URL.",
-      "description": "Description must be at least 10 characters.",
       "category": "Please select a category."
     },
     "success": {
@@ -122,5 +122,17 @@
   "Favorites": {
     "title": "My Favorites",
     "empty": "You haven't favorited any websites yet."
+  },
+  "Disclaimer": {
+    "title": "Disclaimer & Terms of Use",
+    "description": "Please read and accept the following terms before using NavHub.",
+    "contentTitle": "Important Notice",
+    "point1": "NavHub is a community-driven platform. We do not endorse or guarantee the accuracy, completeness, or usefulness of any third-party websites or tools listed.",
+    "point2": "All external links lead to third-party websites. We are not responsible for their content, privacy practices, or any damages resulting from their use.",
+    "point3": "Use your own judgment when visiting external sites. Always verify the security and legitimacy of any tool or service before use.",
+    "point4": "By continuing to use NavHub, you acknowledge and agree to these terms.",
+    "lastUpdated": "Last updated:",
+    "dontShowAgain": "Don't show this again",
+    "accept": "I Understand"
   }
 }

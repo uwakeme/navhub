@@ -5,6 +5,8 @@ import { Providers } from "@/components/providers";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { BackToTop } from "@/components/back-to-top";
+import { DisclaimerModal } from "@/components/disclaimer-modal";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -34,7 +36,7 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as "en" | "zh")) {
     notFound();
   }
 
@@ -57,6 +59,8 @@ export default async function RootLayout({
               </main>
             </div>
             <Toaster />
+            <BackToTop />
+            <DisclaimerModal />
           </Providers>
         </NextIntlClientProvider>
       </body>

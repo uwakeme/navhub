@@ -1,0 +1,18 @@
+{
+  "buildCommand": "npx prisma generate && npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "AUTH_SECRET": "@auth_secret",
+    "AUTH_GITHUB_ID": "@auth_github_id",
+    "AUTH_GITHUB_SECRET": "@auth_github_secret"
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ]
+}

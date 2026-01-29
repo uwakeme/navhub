@@ -34,9 +34,7 @@ const formSchema = z.object({
   url: z.string().url({
     message: "Please enter a valid URL.",
   }),
-  description: z.string().min(10, {
-    message: "Description must be at least 10 characters.",
-  }),
+  description: z.string().optional(),
   categoryId: z.string().min(1, {
     message: "Please select a category.",
   }),
@@ -57,9 +55,7 @@ export function SubmitForm({ categories }: SubmitFormProps) {
     url: z.string().url({
       message: t('validation.url'),
     }),
-    description: z.string().min(10, {
-      message: t('validation.description'),
-    }),
+    description: z.string().optional(),
     categoryId: z.string().min(1, {
       message: t('validation.category'),
     }),
@@ -73,6 +69,32 @@ export function SubmitForm({ categories }: SubmitFormProps) {
       description: "",
     },
   })
+
+  // Fetch metadata from URL
+  const fetchMetadata = async () => {
+    const url = form.getValues('url')
+    if (!url) return
+
+    try {
+      const res = await fetch(`/api/websites/metadata?url=${encodeURIComponent(url)}`)
+      if (res.ok) {
+        const data = await res.json()
+        
+        // Only auto-fill title if empty
+        if (data.title && !form.getValues('title')) {
+          form.setValue('title', data.title)
+        }
+        
+        // Only auto-fill description if empty
+        if (data.description && !form.getValues('description')) {
+          form.setValue('description', data.description)
+        }
+      }
+    } catch (error) {
+      // Silently fail - metadata fetch is optional
+      console.debug('Failed to fetch metadata:', error)
+    }
+  }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -139,7 +161,11 @@ export function SubmitForm({ categories }: SubmitFormProps) {
             <FormItem>
               <FormLabel>{t('form.url')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('form.urlPlaceholder')} {...field} />
+                <Input 
+                  placeholder={t('form.urlPlaceholder')} 
+                  {...field} 
+                  onBlur={fetchMetadata}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -176,7 +202,7 @@ export function SubmitForm({ categories }: SubmitFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('form.description')}</FormLabel>
+              <FormLabel>{t('form.description')} <span className="text-muted-foreground">(可选)</span></FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder={t('form.descriptionPlaceholder')} 
@@ -184,6 +210,9 @@ export function SubmitForm({ categories }: SubmitFormProps) {
                   {...field} 
                 />
               </FormControl>
+              <FormDescription>
+                {t('form.descriptionHint')}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

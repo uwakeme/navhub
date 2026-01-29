@@ -47,6 +47,7 @@
       "urlPlaceholder": "https://...",
       "description": "描述",
       "descriptionPlaceholder": "简要描述这个网站的功能...",
+      "descriptionHint": "可选 - 如果不填写，将从网站自动获取",
       "category": "分类",
       "categoryPlaceholder": "选择分类",
       "submit": "提交网站",
@@ -55,7 +56,6 @@
     "validation": {
       "title": "标题至少需要2个字符。",
       "url": "请输入有效的URL。",
-      "description": "描述至少需要10个字符。",
       "category": "请选择一个分类。"
     },
     "success": {
@@ -123,5 +123,17 @@
   "Favorites": {
     "title": "我的收藏",
     "empty": "你还没有收藏任何网站。"
+  },
+  "Disclaimer": {
+    "title": "免责声明与使用条款",
+    "description": "请在使用 NavHub 前阅读并接受以下条款。",
+    "contentTitle": "重要提示",
+    "point1": "NavHub 是一个社区驱动的平台。我们不认可或保证所列第三方网站或工具的准确性、完整性或实用性。",
+    "point2": "所有外部链接均指向第三方网站。我们对其内容、隐私实践或使用造成的任何损害不承担责任。",
+    "point3": "访问外部网站时请自行判断。在使用任何工具或服务前，请务必验证其安全性和合法性。",
+    "point4": "继续使用 NavHub 即表示您知晓并同意上述条款。",
+    "lastUpdated": "最后更新：",
+    "dontShowAgain": "不再显示此提示",
+    "accept": "我已了解"
   }
 }

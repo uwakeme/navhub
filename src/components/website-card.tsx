@@ -85,7 +85,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false }: 
       </CardHeader>
       <CardContent className="flex-1">
         <p className="text-sm text-muted-foreground line-clamp-2">
-          {website.description}
+          {website.description || "暂无描述"}
         </p>
       </CardContent>
       {/* Overlay link for the whole card */}
