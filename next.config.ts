@@ -5,8 +5,15 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Exclude @prisma/client from bundling (moved from experimental in Next.js 16)
-  serverExternalPackages: ['@prisma/client', 'prisma'],
+  // Externalize heavy packages to reduce SSR bundle size
+  serverExternalPackages: [
+    '@prisma/client',
+    'prisma',
+    'pg',
+    '@prisma/adapter-pg',
+    '@auth/prisma-adapter',
+    'next-auth',
+  ],
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
