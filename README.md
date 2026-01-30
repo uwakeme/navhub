@@ -5,25 +5,25 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-blue?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-NavHub 是一个开发者导航主页，用于发现、分享和组织最佳开发者工具和资源。
+一个简洁的开发者导航主页，帮你整理和发现好用的开发工具。
 
-## ✨ 功能特性
+## 功能特性
 
-- 🔍 **搜索** - 快速搜索所有资源
-- 📂 **分类** - 按类别浏览（AI、开源、开发者工具等）
-- ❤️ **收藏** - 保存你喜欢的工具
-- 📤 **提交** - 用户可提交新网站（需审核）
-- 👑 **管理后台** - 管理员可审核和管理网站
-- 🌐 **国际化** - 支持中英文双语
-- 🔐 **认证** - GitHub OAuth 登录
-- ⬆️ **回到顶部** - 便捷的回到顶部按钮
-- 📄 **免责声明** - 首次访问显示使用条款
-- 🤖 **自动获取** - 提交网站时自动获取标题和描述
+- **搜索** - 快速找到需要的资源
+- **分类** - 按类别浏览（AI、开源、开发者工具等）
+- **收藏** - 保存常用的工具
+- **提交** - 提交新网站（需要管理员审核）
+- **管理后台** - 管理员审核和管理网站
+- **国际化** - 中英文双语支持
+- **GitHub 登录** - 用 GitHub 账号快速登录
+- **回到顶部** - 快速返回页面顶部
+- **免责声明** - 首次访问显示使用条款
+- **自动获取** - 提交网站时自动获取标题和描述
 
-## 🛠️ 技术栈
+## 技术栈
 
 - **框架**: Next.js 16 (App Router)
-- **数据库**: PostgreSQL (推荐 Supabase)
+- **数据库**: PostgreSQL（推荐 Supabase）
 - **ORM**: Prisma
 - **认证**: NextAuth.js v5
 - **UI**: Tailwind CSS, shadcn/ui, Lucide Icons
@@ -31,7 +31,7 @@ NavHub 是一个开发者导航主页，用于发现、分享和组织最佳开�
 - **表单**: React Hook Form + Zod
 - **提示**: Sonner Toast
 
-## 📁 项目结构
+## 项目结构
 
 ```
 navigation_homepage/
@@ -76,15 +76,15 @@ navigation_homepage/
 └── README.md                 # 本文件
 ```
 
-## 🚀 快速开始
+## 快速开始
 
-### 1. 环境要求
+### 环境要求
 
 - Node.js 18+
 - npm 或 pnpm
 - PostgreSQL 数据库（推荐 Supabase）
 
-### 2. 本地开发
+### 本地开发
 
 ```bash
 # 1. 克隆项目
@@ -109,23 +109,21 @@ npm run dev
 
 访问 [http://localhost:3000](http://localhost:3000)
 
-### 3. 提升为管理员
+### 提升为管理员
 
 ```bash
 # 使用你的邮箱（GitHub 账号邮箱）
 npx tsx scripts/promote-admin.ts your-email@example.com
 ```
 
-## 🌍 国际化
-
-项目支持中英文双语：
+## 国际化
 
 - **英文**: 默认语言
 - **中文**: 通过语言切换器切换
 
 翻译文件位于 `messages/` 目录。
 
-## 📤 提交网站
+## 提交网站
 
 1. 登录 GitHub 账号
 2. 访问 `/submit` 页面
@@ -140,7 +138,7 @@ npx tsx scripts/promote-admin.ts your-email@example.com
 - 在 URL 输入框失去焦点时，自动从网站获取标题和描述
 - 如果网站无法访问或没有元数据，可以手动填写
 
-## 🔐 认证
+## 认证
 
 ### GitHub OAuth
 
@@ -152,7 +150,7 @@ npx tsx scripts/promote-admin.ts your-email@example.com
 4. 获取 Client ID 和 Client Secret
 5. 配置到环境变量
 
-## 🗄️ 数据库
+## 数据库
 
 ### 数据库迁移
 
@@ -173,7 +171,7 @@ npm run db:reset
 npm run db:seed
 ```
 
-## 🚀 部署
+## 部署
 
 ### 推荐方案：EdgeOne Pages + Supabase（完全免费）
 
@@ -195,7 +193,7 @@ npm run db:seed
    - 配置环境变量
    - 一键部署
 
-**成本**: **完全免费** ✅
+**成本**: **完全免费**
 
 ### 其他部署平台
 
@@ -203,7 +201,7 @@ npm run db:seed
 - **Railway**: 支持 PostgreSQL（需要科学上网）
 - **自建服务器**: 阿里云/腾讯云轻量服务器（约 50-100 元/年）
 
-## 📝 环境变量
+## 环境变量
 
 | 变量名 | 说明 | 必填 | 示例 |
 |--------|------|------|------|
@@ -212,7 +210,7 @@ npm run db:seed
 | `AUTH_GITHUB_ID` | GitHub Client ID | ✅ | `ghp_xxxxxxxxxxxx` |
 | `AUTH_GITHUB_SECRET` | GitHub Client Secret | ✅ | `ghc_xxxxxxxxxxxx` |
 
-## 🔧 常用命令
+## 常用命令
 
 ```bash
 # 开发
@@ -235,7 +233,7 @@ npm run db:reset         # 重置数据库
 npx tsx scripts/promote-admin.ts <email>  # 提升管理员
 ```
 
-## 🎨 自定义
+## 自定义
 
 ### 添加新分类
 
@@ -253,17 +251,17 @@ npx tsx scripts/promote-admin.ts <email>  # 提升管理员
 2. 编辑 `messages/zh.json`
 3. 重启开发服务器
 
-## 📄 许可证
+## 许可证
 
 MIT License - 详见 [LICENSE](LICENSE)
 
-## 🤝 贡献
+## 贡献
 
 欢迎提交 Issue 和 Pull Request！
 
-## 📞 支持
+## 支持
 
-如有问题，请：
+有问题可以：
 1. 查看 [DEPLOYMENT.md](DEPLOYMENT.md) 部署文档
 2. 提交 GitHub Issue
 3. 查看相关文档：
@@ -274,4 +272,4 @@ MIT License - 详见 [LICENSE](LICENSE)
 
 ---
 
-**祝使用愉快！** 🎉
+祝你使用愉快！

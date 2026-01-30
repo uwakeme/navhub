@@ -27,7 +27,7 @@ npx tsx scripts/promote-admin.ts <email>  # Promote user to admin
 
 ### No Testing Framework
 
-This project currently has **no test files or testing framework configured**.
+This project currently has no test files or testing framework configured.
 If adding tests, consider: Vitest + React Testing Library + Playwright.
 
 ---
