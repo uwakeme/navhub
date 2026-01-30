@@ -82,7 +82,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
           style={{ transform: isHovered ? 'scaleX(1)' : 'scaleX(0)' }}
         />
 
-        <CardHeader className="flex-row gap-4 items-start space-y-0 pb-3 relative z-10">
+        <CardHeader className="flex-row gap-4 items-start space-y-0 pb-3 relative z-10 pointer-events-none">
           <div
             className="w-12 h-12 rounded-xl p-0.5 shrink-0 overflow-hidden border transition-transform duration-200 group-hover:scale-105
               bg-white border-slate-200 shadow-sm
@@ -122,7 +122,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
           </div>
         </CardHeader>
         
-        <CardContent className="flex-1 relative z-10">
+        <CardContent className="flex-1 relative z-10 pointer-events-none">
           <p className="text-sm line-clamp-2 leading-relaxed text-slate-600 dark:text-slate-400">
             {website.description || "暂无描述"}
           </p>
@@ -140,18 +140,9 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
           )}
         </CardContent>
         
-        {/* Full card link */}
-        <a 
-          href={website.url} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="absolute inset-0 z-0"
-          aria-label={`Visit ${website.title}`}
-        />
-        
-        <CardFooter className="pt-0 flex justify-between items-center relative z-10">
+        <CardFooter className="pt-0 flex justify-between items-center relative z-10 pointer-events-none">
           <div
-            className={`flex items-center gap-1 text-xs transition-all duration-200 text-slate-400 dark:text-slate-500 ${
+            className={`flex items-center gap-1 text-xs transition-all duration-200 text-slate-400 dark:text-slate-500 pointer-events-none ${
               isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
             }`}
           >
@@ -162,7 +153,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
           <Button
             variant="ghost"
             size="icon"
-            className="shrink-0 transition-colors rounded-full
+            className="shrink-0 transition-colors rounded-full pointer-events-auto
               hover:bg-slate-100 hover:text-slate-600
               dark:hover:bg-slate-500/10 dark:hover:text-slate-400"
             onClick={toggleFavorite}
@@ -177,6 +168,15 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
             />
           </Button>
         </CardFooter>
+        
+        {/* Full card link - covers everything */}
+        <a 
+          href={website.url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="absolute inset-0 z-0 pointer-events-auto cursor-pointer"
+          aria-label={`Visit ${website.title}`}
+        />
       </Card>
     </div>
   )

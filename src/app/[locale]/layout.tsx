@@ -68,10 +68,10 @@ export default async function RootLayout({
           <Providers>
             <Header />
             <div className="flex flex-1 relative">
-              <div className="sticky top-16 h-[calc(100vh-4rem)]">
+              <div className="sticky top-16 h-[calc(100vh-4rem)] z-0">
                 <SidebarClient categories={categories} />
               </div>
-              <main className="flex-1 p-6 overflow-y-auto">
+              <main className="flex-1 p-6 overflow-y-auto z-0">
                 {children}
               </main>
             </div>
