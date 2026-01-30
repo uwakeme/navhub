@@ -23,7 +23,7 @@ export function Header() {
               alt="NavHub Logo" 
               width={40} 
               height={40} 
-              className="relative z-10 group-hover:scale-110 transition-transform duration-300"
+              className="relative z-10 group-hover:scale-110 transition-transform duration-300 dark:invert"
             />
           </div>
           <div className="flex items-center gap-1.5">
