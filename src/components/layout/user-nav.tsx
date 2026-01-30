@@ -49,16 +49,6 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/favorites">
-              {tNav("favorites")}
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/submit">
-              {tNav("submit")}
-            </Link>
-          </DropdownMenuItem>
           {session.user.role === 'ADMIN' && (
              <DropdownMenuItem asChild>
                <Link href="/admin">
@@ -67,7 +57,7 @@ export function UserNav() {
              </DropdownMenuItem>
           )}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        {session.user.role === 'ADMIN' && <DropdownMenuSeparator />}
         <DropdownMenuItem onClick={() => signOut()}>
           {tCommon("signOut")}
         </DropdownMenuItem>

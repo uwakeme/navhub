@@ -17,7 +17,10 @@
   },
   "Sidebar": {
     "categories": "Categories",
-    "all": "All"
+    "all": "All",
+    "quickLinks": "Quick Links",
+    "submit": "Submit Website",
+    "favorites": "My Favorites"
   },
   "Categories": {
     "ai-tools": "AI Tools",

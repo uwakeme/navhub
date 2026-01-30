@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "../globals.css";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/layout/header";
-import { Sidebar } from "@/components/layout/sidebar";
+import { SidebarClient } from "@/components/layout/sidebar-client";
 import { Toaster } from "@/components/ui/sonner";
 import { BackToTop } from "@/components/back-to-top";
 import { DisclaimerModal } from "@/components/disclaimer-modal";
@@ -11,15 +11,19 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { prisma, executeWithRetry } from "@/lib/prisma";
+import { Category } from "@/lib/categories";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -41,24 +45,45 @@ export default async function RootLayout({
   }
 
   const messages = await getMessages();
+  
+  // Fetch categories in server component
+  let categories: Category[] = [];
+  try {
+    categories = await executeWithRetry(async () => {
+      return await prisma.category.findMany({
+        orderBy: { order: 'asc' },
+        take: 50,
+      });
+    });
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+  }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col font-sans`}
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
             <div className="flex flex-1 relative">
               <div className="sticky top-16 h-[calc(100vh-4rem)]">
-                <Sidebar />
+                <SidebarClient categories={categories} />
               </div>
-              <main className="flex-1 p-6 bg-muted/10 overflow-y-auto">
+              <main className="flex-1 p-6 overflow-y-auto">
                 {children}
               </main>
             </div>
-            <Toaster />
+            <Toaster 
+              toastOptions={{
+                style: {
+                  background: 'var(--popover)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--popover-foreground)',
+                },
+              }}
+            />
             <BackToTop />
             <DisclaimerModal />
           </Providers>
