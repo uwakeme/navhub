@@ -37,7 +37,11 @@
     "discover": "发现",
     "found": "找到 {count} 个网站",
     "notFound": "没有找到符合条件的网站。",
-    "noWebsites": "没有找到网站"
+    "noWebsites": "没有找到网站",
+    "loading": "加载中...",
+    "loadMoreError": "加载失败，请重试",
+    "retry": "重试",
+    "noMore": "没有更多内容了"
   },
   "Submit": {
     "title": "提交网站",

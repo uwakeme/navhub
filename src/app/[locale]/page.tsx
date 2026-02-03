@@ -2,10 +2,10 @@ export const runtime = 'nodejs'
 
 import { auth } from "@/lib/auth"
 import { prisma, executeWithRetry } from "@/lib/prisma"
-import { WebsiteCard } from "@/components/website-card"
 import { Metadata } from "next"
 import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
+import { InfiniteWebsiteList } from "@/components/infinite-website-list"
 
 export const metadata: Metadata = {
   title: "NavHub - Discover Best Developer Tools",
@@ -20,6 +20,8 @@ interface PageProps {
     locale: string
   }>
 }
+
+const INITIAL_LIMIT = 24
 
 export default async function Home(props: PageProps) {
   const searchParams = await props.searchParams
@@ -55,30 +57,38 @@ export default async function Home(props: PageProps) {
   }>>>[number]
 
   let websites: WebsiteWithCategory[] = []
+  let totalCount = 0
   let error: string | null = null
   
   try {
-    websites = await executeWithRetry(async () => {
-      return await prisma.website.findMany({
-        where,
-        orderBy: [
-          { featured: 'desc' },
-          { clicks: 'desc' },
-          { createdAt: 'desc' },
-        ],
-        include: {
-          category: true,
-        },
-        take: 100,
+    const [websitesData, countData] = await Promise.all([
+      executeWithRetry(async () => {
+        return await prisma.website.findMany({
+          where,
+          orderBy: [
+            { featured: 'desc' },
+            { clicks: 'desc' },
+            { createdAt: 'desc' },
+          ],
+          include: {
+            category: true,
+          },
+          take: INITIAL_LIMIT,
+        })
+      }),
+      executeWithRetry(async () => {
+        return await prisma.website.count({ where })
       })
-    })
+    ])
+    websites = websitesData
+    totalCount = countData
   } catch (e) {
     console.error('Failed to load websites:', e)
     error = '数据库连接失败，请稍后重试'
   }
 
   // Fetch user favorites
-  const favoriteIds = new Set<string>()
+  const favoriteIds: string[] = []
   if (session?.user?.id) {
     try {
       const favorites = await executeWithRetry(async () => {
@@ -87,7 +97,7 @@ export default async function Home(props: PageProps) {
           select: { websiteId: true }
         })
       })
-      favorites.forEach(f => favoriteIds.add(f.websiteId))
+      favorites.forEach(f => favoriteIds.push(f.websiteId))
     } catch (e) {
       console.error('Failed to load favorites:', e)
     }
@@ -133,7 +143,7 @@ export default async function Home(props: PageProps) {
             )}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-500">
-            {t('found', {count: websites.length})}
+            {t('found', {count: totalCount})}
           </p>
         </div>
         
@@ -159,26 +169,15 @@ export default async function Home(props: PageProps) {
         </div>
       )}
 
-      {/* Content */}
-      {!error && websites.length === 0 ? (
-        <div className="text-center py-20">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 dark:bg-slate-500/20 flex items-center justify-center">
-            <span className="text-3xl">🔍</span>
-          </div>
-          <p className="text-lg text-slate-500 dark:text-slate-400">{t('notFound')}</p>
-          <p className="text-sm text-slate-400 dark:text-slate-600 mt-2">尝试其他关键词或分类</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
-          {websites.map((website, index) => (
-            <WebsiteCard 
-              key={website.id} 
-              website={website} 
-              isFavorited={favoriteIds.has(website.id)}
-              index={index}
-            />
-          ))}
-        </div>
+      {/* Content with Infinite Scroll */}
+      {!error && (
+        <InfiniteWebsiteList
+          initialWebsites={websites}
+          initialFavoriteIds={favoriteIds}
+          searchQuery={q}
+          categorySlug={categorySlug}
+          locale={params.locale}
+        />
       )}
     </div>
   )

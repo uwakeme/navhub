@@ -36,7 +36,11 @@
     "searchResult": "Search results for \"{query}\"",
     "discover": "Discover",
     "found": "{count} {count, plural, =1 {website} other {websites}} found",
-    "notFound": "No websites found matching your criteria."
+    "notFound": "No websites found matching your criteria.",
+    "loading": "Loading...",
+    "loadMoreError": "Failed to load more. Please try again.",
+    "retry": "Retry",
+    "noMore": "No more content"
   },
   "Submit": {
     "title": "Submit a Website",

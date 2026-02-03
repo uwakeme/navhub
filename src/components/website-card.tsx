@@ -65,10 +65,7 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
 
   // Use CSS classes with dark: prefix instead of JS conditionals to avoid hydration mismatch
   return (
-    <div 
-      className="animate-fade-in"
-      style={{ animationDelay: `${index * 50}ms` }}
-    >
+    <div>
       <Card
         className="group relative flex flex-col h-full border transition-all duration-300 overflow-hidden
           bg-white border-slate-200 hover:border-slate-400
