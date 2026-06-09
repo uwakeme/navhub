@@ -32,9 +32,9 @@ export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
       }
 
       if (!res.ok) throw new Error('Action failed')
-      
-      const toastKey = action === 'approve' ? 'toast.approveSuccess' : 
-                       action === 'reject' ? 'toast.rejectSuccess' : 
+
+      const toastKey = action === 'approve' ? 'toast.approveSuccess' :
+                       action === 'reject' ? 'toast.rejectSuccess' :
                        'toast.deleteSuccess'
       toast.success(t(toastKey))
       router.refresh()
@@ -47,19 +47,19 @@ export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
     <div className="flex items-center gap-2">
       {status === 'PENDING' && (
         <>
-          <Button 
-            size="icon" 
-            variant="outline" 
-            className="h-8 w-8 text-green-600" 
+          <Button
+            size="icon"
+            variant="outline"
+            className="h-8 w-8 rounded-none border-2 hover:bg-accent hover:text-accent-foreground hover:border-accent"
             onClick={() => handleAction('approve')}
             title={t('actions.approve')}
           >
             <Check className="h-4 w-4" />
           </Button>
-          <Button 
-            size="icon" 
-            variant="outline" 
-            className="h-8 w-8 text-red-600" 
+          <Button
+            size="icon"
+            variant="outline"
+            className="h-8 w-8 rounded-none border-2 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive"
             onClick={() => handleAction('reject')}
             title={t('actions.reject')}
           >
@@ -67,10 +67,10 @@ export function WebsiteActions({ websiteId, status }: WebsiteActionsProps) {
           </Button>
         </>
       )}
-      <Button 
-        size="icon" 
-        variant="destructive" 
-        className="h-8 w-8" 
+      <Button
+        size="icon"
+        variant="destructive"
+        className="h-8 w-8 rounded-none"
         onClick={() => handleAction('delete')}
         title={t('actions.delete')}
       >

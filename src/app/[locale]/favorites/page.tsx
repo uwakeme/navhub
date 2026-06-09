@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function FavoritesPage() {
   const session = await auth()
-  
+
   if (!session?.user?.id) {
     redirect('/api/auth/signin?callbackUrl=/favorites')
   }
@@ -58,48 +58,51 @@ export default async function FavoritesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700/30">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-rose-100 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20">
-              <Heart className="h-5 w-5 text-rose-500 dark:text-rose-400" />
-            </div>
+      <div className="flex items-end justify-between pb-4 border-b-2 border-border">
+        <div className="space-y-1.5">
+          <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
+            <span className="text-accent">{'//'}</span> user.favorites
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight font-mono flex items-center gap-3">
+            <span className="inline-flex w-9 h-9 border-2 border-foreground bg-foreground text-background items-center justify-center">
+              <Heart className="h-4 w-4 fill-accent text-accent" />
+            </span>
             {t('title')}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-500">
-            共 {favorites.length} 个收藏
+          <p className="text-sm text-muted-foreground font-mono">
+            <span className="text-accent">→</span> 共 {favorites.length} 个收藏
           </p>
         </div>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center">
-          <p className="text-red-500 dark:text-red-400">{error}</p>
-          <button 
+        <div className="border-2 border-destructive bg-destructive/10 p-4 text-center font-mono">
+          <p className="text-destructive">{error}</p>
+          <button
             onClick={() => window.location.reload()}
-            className="mt-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-300 rounded-md text-sm transition-colors"
+            className="mt-3 px-4 py-2 border-2 border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors text-xs uppercase tracking-widest"
           >
-            刷新页面
+            [ reload ]
           </button>
         </div>
       )}
-      
+
       {/* Content */}
       {!error && favorites.length === 0 ? (
-        <div className="text-center py-20">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-rose-100 dark:bg-rose-500/20 flex items-center justify-center">
-            <Heart className="h-8 w-8 text-rose-500 dark:text-rose-400" />
+        <div className="text-center py-20 border-2 border-dashed border-border">
+          <div className="w-16 h-16 mx-auto mb-4 border-2 border-foreground bg-foreground text-background flex items-center justify-center">
+            <Heart className="h-7 w-7 fill-accent text-accent" />
           </div>
-          <p className="text-lg text-slate-500 dark:text-slate-400 mb-2">{t('empty')}</p>
-          <p className="text-sm text-slate-400 dark:text-slate-600">浏览网站时点击心形图标添加收藏</p>
+          <p className="text-lg font-bold uppercase tracking-widest font-mono">{t('empty')}</p>
+          <p className="text-sm text-muted-foreground mt-2 font-mono">{'// 点击心形图标添加收藏'}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
           {favorites.map((fav, index) => (
-            <WebsiteCard 
-              key={fav.website.id} 
-              website={fav.website} 
+            <WebsiteCard
+              key={fav.website.id}
+              website={fav.website}
               isFavorited={true}
               index={index}
             />

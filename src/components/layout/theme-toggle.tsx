@@ -11,13 +11,14 @@ export function ThemeToggle() {
 
   // Avoid hydration mismatch by only rendering after mount
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
-        <Monitor className="h-4 w-4 text-slate-400" />
+      <Button variant="ghost" size="icon" className="h-9 w-9 border border-border">
+        <Monitor className="h-4 w-4 text-muted-foreground" />
         <span className="sr-only">切换主题</span>
       </Button>
     )
@@ -25,12 +26,12 @@ export function ThemeToggle() {
 
   const getIcon = () => {
     if (theme === "system") {
-      return <Monitor className="h-4 w-4 text-slate-500" />
+      return <Monitor className="h-4 w-4 text-foreground" />
     }
     if (theme === "dark") {
-      return <Moon className="h-4 w-4 text-slate-400" />
+      return <Moon className="h-4 w-4 text-foreground" />
     }
-    return <Sun className="h-4 w-4 text-amber-500" />
+    return <Sun className="h-4 w-4 text-accent" />
   }
 
   const cycleTheme = () => {
@@ -44,10 +45,10 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button 
-      variant="ghost" 
-      size="icon" 
-      className="h-9 w-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+    <Button
+      variant="ghost"
+      size="icon"
+      className="h-9 w-9 border border-border hover:border-accent hover:bg-accent hover:text-accent-foreground transition-colors"
       onClick={cycleTheme}
       title={`当前主题: ${theme === 'system' ? '跟随系统' : theme === 'dark' ? '深色模式' : '明亮模式'}`}
     >

@@ -156,20 +156,27 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
       <div className="flex justify-end">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={handleCreate}>
+            <Button
+              onClick={handleCreate}
+              className="bg-foreground text-background border-2 border-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent font-mono uppercase tracking-widest text-xs"
+            >
               <Plus className="mr-2 h-4 w-4" />
               {t('actions.create')}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>
-                {editingCategory ? t('actions.edit') : t('actions.create')} {t('categoryForm.title')}
+              <DialogTitle className="font-mono">
+                <span className="text-accent">▸</span>{' '}
+                {editingCategory ? t('actions.edit') : t('actions.create')}{' '}
+                {t('categoryForm.title')}
               </DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">{t('table.name')}</Label>
+                <Label htmlFor="name" className="font-mono text-xs uppercase tracking-widest">
+                  {t('table.name')}
+                </Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -179,7 +186,9 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="slug">{t('table.slug')}</Label>
+                <Label htmlFor="slug" className="font-mono text-xs uppercase tracking-widest">
+                  {t('table.slug')}
+                </Label>
                 <Input
                   id="slug"
                   value={formData.slug}
@@ -189,7 +198,9 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">{t('table.description')}</Label>
+                <Label htmlFor="description" className="font-mono text-xs uppercase tracking-widest">
+                  {t('table.description')}
+                </Label>
                 <Input
                   id="description"
                   value={formData.description}
@@ -198,7 +209,9 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="icon">{t('table.icon')}</Label>
+                <Label htmlFor="icon" className="font-mono text-xs uppercase tracking-widest">
+                  {t('table.icon')}
+                </Label>
                 <Input
                   id="icon"
                   value={formData.icon}
@@ -207,7 +220,9 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="order">{t('table.order')}</Label>
+                <Label htmlFor="order" className="font-mono text-xs uppercase tracking-widest">
+                  {t('table.order')}
+                </Label>
                 <Input
                   id="order"
                   type="number"
@@ -215,11 +230,20 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                   onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
                 />
               </div>
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsDialogOpen(false)}
+                  className="font-mono uppercase tracking-widest text-xs"
+                >
                   {t('categoryForm.cancel')}
                 </Button>
-                <Button type="submit" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="bg-foreground text-background border-2 border-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent font-mono uppercase tracking-widest text-xs"
+                >
                   {t('categoryForm.save')}
                 </Button>
               </div>
@@ -228,32 +252,32 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
         </Dialog>
       </div>
 
-      <div className="rounded-md border">
+      <div className="border-2 border-border overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>{t('table.order')}</TableHead>
-              <TableHead>{t('table.name')}</TableHead>
-              <TableHead>{t('table.slug')}</TableHead>
-              <TableHead>{t('table.icon')}</TableHead>
-              <TableHead>{t('table.websitesCount')}</TableHead>
-              <TableHead className="text-right">{t('table.actions')}</TableHead>
+            <TableRow className="border-b-2 border-border hover:bg-transparent">
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.order')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.name')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.slug')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.icon')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.websitesCount')}</TableHead>
+              <TableHead className="text-right font-mono uppercase tracking-widest text-xs">{t('table.actions')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {categories.map((category) => (
-              <TableRow key={category.id}>
-                <TableCell>{category.order}</TableCell>
-                <TableCell className="font-medium">{category.name}</TableCell>
-                <TableCell>{category.slug}</TableCell>
-                <TableCell>{category.icon || '-'}</TableCell>
-                <TableCell>{category._count.websites}</TableCell>
+              <TableRow key={category.id} className="border-b border-border hover:bg-muted">
+                <TableCell className="font-mono">{category.order}</TableCell>
+                <TableCell className="font-bold font-mono">{category.name}</TableCell>
+                <TableCell className="font-mono text-xs text-muted-foreground">{category.slug}</TableCell>
+                <TableCell className="font-mono text-xs">{category.icon || '-'}</TableCell>
+                <TableCell className="font-mono">{category._count.websites}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">
                     <Button
                       size="icon"
                       variant="outline"
-                      className="h-8 w-8"
+                      className="h-8 w-8 rounded-none"
                       onClick={() => handleEdit(category)}
                     >
                       <Pencil className="h-4 w-4" />
@@ -261,7 +285,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                     <Button
                       size="icon"
                       variant="destructive"
-                      className="h-8 w-8"
+                      className="h-8 w-8 rounded-none"
                       onClick={() => handleDelete(category)}
                       disabled={category._count.websites > 0}
                     >
@@ -273,8 +297,8 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
             ))}
             {categories.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                  {t('table.empty')}
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-mono">
+                  <span className="text-accent">{'//'}</span> {t('table.empty')}
                 </TableCell>
               </TableRow>
             )}

@@ -29,7 +29,7 @@ export default async function Home(props: PageProps) {
   const session = await auth()
   const q = searchParams.q
   const categorySlug = searchParams.category
-  
+
   const t = await getTranslations({locale: params.locale, namespace: 'Home'})
 
   const where: Prisma.WebsiteWhereInput = {
@@ -59,7 +59,7 @@ export default async function Home(props: PageProps) {
   let websites: WebsiteWithCategory[] = []
   let totalCount = 0
   let error: string | null = null
-  
+
   try {
     const [websitesData, countData] = await Promise.all([
       executeWithRetry(async () => {
@@ -116,55 +116,61 @@ export default async function Home(props: PageProps) {
       console.error('Failed to load category:', e)
     }
   }
-  
+
   // Get category translation
   const tCategories = await getTranslations("Categories")
-  const categoryDisplayName = currentCategory 
-    ? (tCategories(currentCategory.slug) === currentCategory.slug 
-        ? currentCategory.name 
+  const categoryDisplayName = currentCategory
+    ? (tCategories(currentCategory.slug) === currentCategory.slug
+        ? currentCategory.name
         : tCategories(currentCategory.slug))
     : null
 
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700/30">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+      <div className="flex items-end justify-between pb-4 border-b-2 border-border">
+        <div className="space-y-1.5">
+          <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
+            <span className="text-accent">{'//'}</span> {categorySlug ? 'filter' : 'browse'}
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight font-mono">
             {categoryDisplayName ? (
               <span className="flex items-center gap-2">
-                <span className="text-slate-400">/</span>
+                <span className="text-accent">▸</span>
                 {categoryDisplayName}
               </span>
             ) : q ? (
-              t('searchResult', {query: q})
+              <span className="flex items-center gap-2">
+                <span className="text-muted-foreground">grep:</span>
+                <span className="text-accent">{`"${q}"`}</span>
+              </span>
             ) : (
               <span className="gradient-text">{t('discover')}</span>
             )}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-500">
-            {t('found', {count: totalCount})}
+          <p className="text-sm text-muted-foreground font-mono">
+            <span className="text-accent">{'→'}</span> {t('found', {count: totalCount})}
           </p>
         </div>
-        
+
         {/* Stats or actions could go here */}
-        <div className="hidden sm:flex items-center gap-4 text-sm text-slate-500 dark:text-slate-500">
+        <div className="hidden sm:flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>在线资源</span>
+            <span className="w-2 h-2 bg-accent animate-pulse" />
+            <span>online</span>
           </div>
         </div>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center">
-          <p className="text-red-500 dark:text-red-400">{error}</p>
-          <button 
+        <div className="border-2 border-destructive bg-destructive/10 p-4 text-center font-mono">
+          <p className="text-destructive">{error}</p>
+          <button
             onClick={() => window.location.reload()}
-            className="mt-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-300 rounded-md text-sm transition-colors"
+            className="mt-3 px-4 py-2 border-2 border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors text-xs uppercase tracking-widest font-mono"
           >
-            刷新页面
+            [ reload ]
           </button>
         </div>
       )}

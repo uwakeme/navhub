@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 
 export default async function SubmitPage() {
   const session = await auth()
-  
+
   if (!session) {
     redirect('/api/auth/signin?callbackUrl=/submit')
   }
@@ -26,10 +26,10 @@ export default async function SubmitPage() {
     console.error('Failed to load categories:', e)
     error = '加载分类失败，请稍后重试'
   }
-  
+
   // Get translations for categories
   const tCategories = await getTranslations("Categories")
-  
+
   // Map categories with translated names
   const categoriesWithTranslatedNames = categories.map(cat => ({
     ...cat,
@@ -39,13 +39,13 @@ export default async function SubmitPage() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-6 text-center max-w-md">
-          <p className="text-red-400 mb-4">{error}</p>
-          <button 
+        <div className="border-2 border-destructive bg-destructive/10 p-6 text-center max-w-md font-mono">
+          <p className="text-destructive mb-4">{error}</p>
+          <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-md text-sm transition-colors"
+            className="px-4 py-2 border-2 border-destructive bg-background text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors text-xs uppercase tracking-widest"
           >
-            刷新页面
+            [ reload ]
           </button>
         </div>
       </div>

@@ -74,7 +74,7 @@ export function InfiniteWebsiteList({
       if (categorySlug) params.set('category', categorySlug)
 
       const response = await fetch(`/api/websites/list?${params.toString()}`)
-      
+
       if (!response.ok) {
         throw new Error('Failed to load more websites')
       }
@@ -84,7 +84,7 @@ export function InfiniteWebsiteList({
       setWebsites(prev => [...prev, ...data.items])
       setCursor(data.nextCursor)
       setHasMore(data.hasMore)
-      
+
       // Merge new favorite IDs
       setFavoriteIds(prev => {
         const newSet = new Set(prev)
@@ -137,19 +137,19 @@ export function InfiniteWebsiteList({
 
   if (websites.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 dark:bg-slate-500/20 flex items-center justify-center">
-          <span className="text-3xl">🔍</span>
+      <div className="text-center py-20 border-2 border-dashed border-border">
+        <div className="w-16 h-16 mx-auto mb-4 border-2 border-foreground bg-foreground text-background flex items-center justify-center text-2xl font-bold">
+          ?
         </div>
-        <p className="text-lg text-slate-500 dark:text-slate-400">{t('notFound')}</p>
-        <p className="text-sm text-slate-400 dark:text-slate-600 mt-2">尝试其他关键词或分类</p>
+        <p className="text-lg font-bold uppercase tracking-widest font-mono">{t('notFound')}</p>
+        <p className="text-sm text-muted-foreground mt-2 font-mono">{'// try a different keyword or category'}</p>
       </div>
     )
   }
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
         {websites.map((website, index) => (
           <WebsiteCard
             key={website.id}
@@ -166,31 +166,32 @@ export function InfiniteWebsiteList({
         className="flex justify-center items-center py-8"
       >
         {isLoading && (
-          <div className="flex items-center gap-2 text-slate-500">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-sm">{t('loading') || '加载中...'}</span>
+          <div className="flex items-center gap-2 font-mono text-sm text-muted-foreground uppercase tracking-widest">
+            <Loader2 className="h-4 w-4 animate-spin text-accent" />
+            <span>{t('loading') || 'loading...'}</span>
           </div>
         )}
 
         {error && !isLoading && (
           <div className="flex flex-col items-center gap-3">
-            <p className="text-sm text-red-500">{error}</p>
+            <p className="text-sm text-destructive font-mono">{`// ${error}`}</p>
             <Button
               variant="outline"
               size="sm"
               onClick={loadMore}
-              className="gap-2"
+              className="gap-2 font-mono uppercase tracking-widest"
             >
               <RefreshCw className="h-4 w-4" />
-              {t('retry') || '重试'}
+              {t('retry') || 'retry'}
             </Button>
           </div>
         )}
 
         {!hasMore && !isLoading && websites.length > 0 && (
-          <p className="text-sm text-slate-400">
-            {t('noMore') || '没有更多内容了'}
-          </p>
+          <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+            <span className="text-accent">{'//'}</span>
+            {t('noMore') || 'end of feed'}
+          </div>
         )}
       </div>
     </div>
