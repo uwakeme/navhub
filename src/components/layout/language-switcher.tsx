@@ -23,16 +23,28 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Languages className="h-5 w-5" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 border border-border hover:border-accent hover:bg-accent hover:text-accent-foreground transition-colors font-mono text-xs"
+        >
+          <span className="font-bold tracking-widest">{locale.toUpperCase()}</span>
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => switchLocale("en")}>
+        <DropdownMenuItem
+          onClick={() => switchLocale("en")}
+          className="font-mono text-xs uppercase tracking-widest"
+        >
+          <span className={locale === "en" ? "text-accent" : ""}>●</span>
           English
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => switchLocale("zh")}>
+        <DropdownMenuItem
+          onClick={() => switchLocale("zh")}
+          className="font-mono text-xs uppercase tracking-widest"
+        >
+          <span className={locale === "zh" ? "text-accent" : ""}>●</span>
           中文
         </DropdownMenuItem>
       </DropdownMenuContent>

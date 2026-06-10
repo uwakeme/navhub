@@ -3,24 +3,13 @@
 import { useState, useEffect } from "react"
 import { ArrowUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 
 export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
-  const [isScrolling, setIsScrolling] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      const shouldShow = scrollY > 300
-      setIsVisible(shouldShow)
-      
-      // Add subtle animation when scrolling
-      if (scrollY > 0) {
-        setIsScrolling(true)
-        const timer = setTimeout(() => setIsScrolling(false), 150)
-        return () => clearTimeout(timer)
-      }
+      setIsVisible(window.scrollY > 300)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -40,11 +29,7 @@ export function BackToTop() {
     <Button
       onClick={scrollToTop}
       size="icon"
-      className={cn(
-        "fixed bottom-6 right-6 z-50 shadow-lg transition-all duration-300",
-        "hover:scale-110 hover:shadow-xl",
-        isScrolling && "animate-in fade-in slide-in-from-bottom-2"
-      )}
+      className="fixed bottom-6 right-6 z-50 h-11 w-11 border-2 border-foreground bg-background text-foreground hover:bg-foreground hover:text-background rounded-none shadow-none transition-colors"
       aria-label="Back to top"
     >
       <ArrowUp className="h-5 w-5" />

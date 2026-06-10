@@ -22,7 +22,7 @@ export function Search() {
     } else {
       params.delete('q')
     }
-    
+
     startTransition(() => {
       router.replace(`/?${params.toString()}`)
     })
@@ -30,26 +30,32 @@ export function Search() {
 
   return (
     <div className="relative w-full max-w-md group">
-
-      
       <div className="relative">
-        <SearchIcon className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 transition-colors duration-200 ${
-          isFocused ? 'text-slate-600' : 'text-slate-400 dark:text-slate-500'
-        }`} />
+        <SearchIcon
+          className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 transition-colors duration-150 ${
+            isFocused ? 'text-accent' : 'text-muted-foreground'
+          }`}
+        />
 
         {isPending && (
-          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 animate-spin" />
+          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-accent animate-spin" />
         )}
 
         <Input
           type="search"
           placeholder={t("searchPlaceholder")}
-          className="pl-10 pr-10 w-full bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/50 text-slate-900 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:bg-white dark:focus:bg-slate-800 focus:border-slate-400 dark:focus:border-slate-500/50 focus:ring-2 focus:ring-slate-200 dark:focus:ring-slate-500/20 rounded-lg transition-all duration-200"
+          className={`pl-10 pr-10 w-full bg-background border-border text-foreground placeholder:text-muted-foreground/60 focus:border-accent focus:bg-background focus:ring-1 focus:ring-accent rounded-none font-mono transition-colors ${
+            isFocused ? 'border-accent' : ''
+          }`}
           defaultValue={searchParams.get('q')?.toString()}
           onChange={(e) => handleSearch(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
+
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 text-[10px] font-mono text-muted-foreground pointer-events-none uppercase tracking-wider">
+          {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : "⌘K"}
+        </span>
       </div>
     </div>
   )

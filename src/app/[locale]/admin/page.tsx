@@ -33,40 +33,43 @@ type AdminWebsite = Prisma.WebsiteGetPayload<{
 async function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
   const t = await getTranslations('Admin')
   const tCategories = await getTranslations('Categories')
-  
+
   // Helper to get category name with translation
   function getCategoryName(category: { slug: string; name: string }): string {
     const translated = tCategories(category.slug)
     return translated === category.slug ? category.name : translated
   }
-  
+
   return (
-    <div className="rounded-md border">
+    <div className="border-2 border-border rounded-none overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>{t('table.title')}</TableHead>
-            <TableHead>{t('table.url')}</TableHead>
-            <TableHead>{t('table.category')}</TableHead>
-            <TableHead>{t('table.submittedBy')}</TableHead>
-            <TableHead>{t('table.status')}</TableHead>
-            <TableHead className="text-right">{t('table.actions')}</TableHead>
+          <TableRow className="border-b-2 border-border hover:bg-transparent">
+            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.title')}</TableHead>
+            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.url')}</TableHead>
+            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.category')}</TableHead>
+            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.submittedBy')}</TableHead>
+            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.status')}</TableHead>
+            <TableHead className="text-right font-mono uppercase tracking-widest text-xs">{t('table.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {websites.map((website) => (
-            <TableRow key={website.id}>
-              <TableCell className="font-medium">{website.title}</TableCell>
-              <TableCell className="max-w-[200px] truncate" title={website.url}>
+            <TableRow key={website.id} className="border-b border-border hover:bg-muted">
+              <TableCell className="font-bold font-mono">{website.title}</TableCell>
+              <TableCell className="max-w-[200px] truncate font-mono text-xs text-muted-foreground" title={website.url}>
                 {website.url}
               </TableCell>
               <TableCell>{getCategoryName(website.category)}</TableCell>
-              <TableCell>{website.submittedBy?.name || t('table.unknown')}</TableCell>
+              <TableCell className="font-mono text-xs">{website.submittedBy?.name || t('table.unknown')}</TableCell>
               <TableCell>
-                <Badge variant={
-                  website.status === 'APPROVED' ? 'default' : 
-                  website.status === 'PENDING' ? 'secondary' : 'destructive'
-                }>
+                <Badge
+                  variant={
+                    website.status === 'APPROVED' ? 'default' :
+                    website.status === 'PENDING' ? 'secondary' : 'destructive'
+                  }
+                  className="font-mono"
+                >
                   {t(`status.${website.status}`)}
                 </Badge>
               </TableCell>
@@ -77,8 +80,8 @@ async function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
           ))}
           {websites.length === 0 && (
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                {t('table.empty')}
+              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-mono">
+                <span className="text-accent">{'//'}</span> {t('table.empty')}
               </TableCell>
             </TableRow>
           )}
@@ -90,7 +93,7 @@ async function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
 
 export default async function AdminPage() {
   const session = await auth()
-  
+
   if (session?.user?.role !== 'ADMIN') {
     redirect('/')
   }
@@ -120,13 +123,22 @@ export default async function AdminPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
+      <div className="flex items-end justify-between pb-4 border-b-2 border-border">
+        <div className="space-y-1.5">
+          <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
+            <span className="text-accent">{'//'}</span> admin.console
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight font-mono">
+            <span className="text-muted-foreground">$</span> {t('title')}
+          </h1>
+        </div>
       </div>
 
       <Tabs defaultValue="pending" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="pending">{t('tabs.pendingCount', { count: pendingWebsites.length })}</TabsTrigger>
+          <TabsTrigger value="pending">
+            {t('tabs.pendingCount', { count: pendingWebsites.length })}
+          </TabsTrigger>
           <TabsTrigger value="all">{t('tabs.all')}</TabsTrigger>
           <TabsTrigger value="categories">{t('tabs.categories')}</TabsTrigger>
         </TabsList>

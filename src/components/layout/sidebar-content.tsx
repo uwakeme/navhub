@@ -28,36 +28,29 @@ export function SidebarContent({ categories, currentCategory }: SidebarContentPr
   }
 
   return (
-    <div className="pb-12 w-64 border-r border-slate-200 dark:border-slate-700/50 h-[calc(100vh-4rem)] hidden md:block overflow-y-auto bg-slate-50/80 dark:bg-[#0f172a]/50">
-      <div className="space-y-4 py-4">
+    <div className="pb-12 w-64 border-r border-border h-[calc(100vh-4rem)] hidden md:block overflow-y-auto bg-background">
+      <div className="space-y-6 py-4">
+        {/* Categories Section */}
         <div className="px-3 py-2">
-          <h2 className="mb-3 px-4 text-sm font-semibold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+          <h2 className="mb-3 px-4 text-xs font-bold tracking-widest text-muted-foreground uppercase flex items-center gap-2">
+            <span className="text-accent">{'//'}</span>
             {t('categories')}
           </h2>
-          <div className="space-y-0.5">
+          <div className="space-y-px">
             <Link
-               href="/"
-                className={cn(
-                  "flex items-center rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 group",
-                  !currentCategory
-                    ? "bg-slate-100 dark:bg-slate-500/20 text-slate-900 dark:text-slate-100"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-500/10 hover:text-slate-600 dark:hover:text-slate-300"
-                )}
-             >
-                 <div className={cn(
-                   "mr-3 p-1.5 rounded-md transition-colors",
-                   !currentCategory
-                     ? "bg-slate-200 dark:bg-slate-500/30"
-                     : "bg-slate-100 dark:bg-slate-500/10 group-hover:bg-slate-200 dark:group-hover:bg-slate-500/20"
-                 )}>
-                   <Icons.LayoutGrid className={cn(
-                     "h-4 w-4",
-                     !currentCategory
-                       ? "text-slate-700 dark:text-slate-200"
-                       : "text-slate-500 dark:text-slate-400"
-                   )} />
-                </div>
-               {t('all')}
+              href="/"
+              className={cn(
+                "flex items-center px-4 py-2.5 text-sm font-medium transition-colors border-l-2 group",
+                !currentCategory
+                  ? "bg-foreground text-background border-l-accent"
+                  : "text-foreground hover:bg-muted border-l-transparent hover:border-l-accent hover:text-accent"
+              )}
+            >
+              <span className="mr-3 font-mono text-xs opacity-70">
+                {currentCategory ? "  " : "▸"}
+              </span>
+              <Icons.LayoutGrid className="mr-2 h-4 w-4" />
+              {t('all')}
             </Link>
             {categories.map((category) => {
               const Icon = getIcon(category.icon)
@@ -68,56 +61,53 @@ export function SidebarContent({ categories, currentCategory }: SidebarContentPr
                   key={category.id}
                   href={`/?category=${category.slug}`}
                   className={cn(
-                    "flex items-center rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 group",
+                    "flex items-center px-4 py-2.5 text-sm font-medium transition-colors border-l-2 group",
                     isActive
-                      ? "bg-slate-100 dark:bg-slate-500/20 text-slate-900 dark:text-slate-100"
-                      : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-500/10 hover:text-slate-600 dark:hover:text-slate-300"
+                      ? "bg-foreground text-background border-l-accent"
+                      : "text-foreground hover:bg-muted border-l-transparent hover:border-l-accent hover:text-accent"
                   )}
                 >
-                  <div className={cn(
-                    "mr-3 p-1.5 rounded-md transition-colors",
-                    isActive
-                      ? "bg-slate-200 dark:bg-slate-500/30"
-                      : "bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-500/20"
-                  )}>
-                    <Icon className={cn(
-                      "h-4 w-4 transition-colors",
-                      isActive
-                        ? "text-slate-700 dark:text-slate-200"
-                        : "text-slate-500 dark:text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-400"
-                    )} />
-                  </div>
-                  {categoryName}
+                  <span className="mr-3 font-mono text-xs opacity-70">
+                    {isActive ? "▸" : "  "}
+                  </span>
+                  <Icon className="mr-2 h-4 w-4" />
+                  <span className="truncate">{categoryName}</span>
                 </Link>
               )
             })}
           </div>
         </div>
-        
+
         {/* Quick Links Section */}
         <div className="px-3 py-2">
-          <h2 className="mb-3 px-4 text-sm font-semibold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+          <h2 className="mb-3 px-4 text-xs font-bold tracking-widest text-muted-foreground uppercase flex items-center gap-2">
+            <span className="text-accent">{'//'}</span>
             {t('quickLinks') || '快速链接'}
           </h2>
-          <div className="space-y-0.5">
+          <div className="space-y-px">
             <Link
-               href="/submit"
-               className="flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-300 transition-all duration-200 group"
+              href="/submit"
+              className="flex items-center px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted hover:text-accent transition-colors border-l-2 border-l-transparent hover:border-l-accent group"
             >
-               <div className="mr-3 p-1.5 rounded-md bg-emerald-100 dark:bg-emerald-500/10 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-500/20 transition-colors">
-                 <Icons.Plus className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
-               </div>
-               {t('submit') || '提交网站'}
+              <span className="mr-3 font-mono text-xs opacity-70">+</span>
+              <Icons.Plus className="mr-2 h-4 w-4" />
+              {t('submit') || '提交网站'}
             </Link>
             <Link
-               href="/favorites"
-               className="flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 hover:text-rose-600 dark:hover:text-rose-300 transition-all duration-200 group"
+              href="/favorites"
+              className="flex items-center px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted hover:text-accent transition-colors border-l-2 border-l-transparent hover:border-l-accent group"
             >
-               <div className="mr-3 p-1.5 rounded-md bg-rose-100 dark:bg-rose-500/10 group-hover:bg-rose-200 dark:group-hover:bg-rose-500/20 transition-colors">
-                 <Icons.Heart className="h-4 w-4 text-rose-500 dark:text-rose-400" />
-               </div>
-               {t('favorites') || '我的收藏'}
+              <span className="mr-3 font-mono text-xs opacity-70">*</span>
+              <Icons.Heart className="mr-2 h-4 w-4" />
+              {t('favorites') || '我的收藏'}
             </Link>
+          </div>
+        </div>
+
+        {/* Footer status */}
+        <div className="px-7 pt-4">
+          <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
+            {'v1.0.0 / build_mono'}
           </div>
         </div>
       </div>

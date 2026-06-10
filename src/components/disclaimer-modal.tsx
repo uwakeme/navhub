@@ -38,47 +38,53 @@ export function DisclaimerModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">
+          <div className="text-[10px] font-mono tracking-widest text-muted-foreground uppercase">
+            <span className="text-accent">{'//'}</span> notice
+          </div>
+          <DialogTitle className="text-xl font-extrabold tracking-tight font-mono">
             {t("title")}
           </DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground leading-relaxed">
+          <DialogDescription className="text-sm text-muted-foreground leading-relaxed font-mono">
             {t("description")}
           </DialogDescription>
         </DialogHeader>
-        
-        <div className="space-y-4 text-sm leading-relaxed">
+
+        <div className="space-y-4 text-sm leading-relaxed font-mono">
           <div>
-            <h3 className="font-semibold mb-2">{t("contentTitle")}</h3>
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-              <li>{t("point1")}</li>
-              <li>{t("point2")}</li>
-              <li>{t("point3")}</li>
-              <li>{t("point4")}</li>
+            <h3 className="font-bold mb-2 uppercase tracking-widest text-xs">
+              <span className="text-accent">▸</span> {t("contentTitle")}
+            </h3>
+            <ul className="space-y-1 text-muted-foreground text-xs">
+              <li>{`// ${t("point1")}`}</li>
+              <li>{`// ${t("point2")}`}</li>
+              <li>{`// ${t("point3")}`}</li>
+              <li>{`// ${t("point4")}`}</li>
             </ul>
           </div>
-          
-          <div className="p-3 bg-muted/50 rounded-lg">
-            <p className="text-xs text-muted-foreground italic">
-              {t("lastUpdated")} {new Date().toLocaleDateString()}
-            </p>
+
+          <div className="p-3 border border-border bg-muted text-xs text-muted-foreground font-mono italic">
+            <span className="text-accent">$</span> {t("lastUpdated")} {new Date().toLocaleDateString()}
           </div>
         </div>
 
         <DialogFooter className="flex-col sm:flex-col gap-3">
           <div className="flex items-center gap-2">
-            <Checkbox 
-              id="dont-show-again" 
+            <Checkbox
+              id="dont-show-again"
               checked={dontShowAgain}
               onCheckedChange={(checked) => setDontShowAgain(checked as boolean)}
             />
-            <label 
-              htmlFor="dont-show-again" 
-              className="text-sm text-muted-foreground cursor-pointer"
+            <label
+              htmlFor="dont-show-again"
+              className="text-xs text-muted-foreground cursor-pointer font-mono uppercase tracking-widest"
             >
               {t("dontShowAgain")}
             </label>
           </div>
-          <Button onClick={handleAccept} className="w-full">
+          <Button
+            onClick={handleAccept}
+            className="w-full bg-foreground text-background border-2 border-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent font-mono uppercase tracking-widest"
+          >
             {t("accept")}
           </Button>
         </DialogFooter>
