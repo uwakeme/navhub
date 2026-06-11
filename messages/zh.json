@@ -110,7 +110,8 @@
       "delete": "删除",
       "edit": "编辑",
       "create": "新建分类",
-      "createFriendLink": "新建友链"
+      "createFriendLink": "新建友链",
+      "createWebsite": "新增网站"
     },
     "toast": {
       "approveSuccess": "网站已通过审核",
@@ -122,7 +123,8 @@
       "categoryDeleted": "分类删除成功",
       "friendLinkCreated": "友链已创建",
       "friendLinkUpdated": "友链已更新",
-      "friendLinkDeleted": "友链已删除"
+      "friendLinkDeleted": "友链已删除",
+      "websiteCreated": "网站已添加并上架"
     },
     "categoryForm": {
       "title": "分类",

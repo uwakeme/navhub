@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge"
 import { WebsiteActions } from "@/components/admin/website-actions"
 import { CategoryManager } from "@/components/admin/category-manager"
 import { FriendLinkManager } from "@/components/admin/friend-link-manager"
+import { AdminWebsiteCreator } from "@/components/admin/website-creator"
 import { Metadata } from "next"
 import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
@@ -43,52 +44,52 @@ async function WebsiteTable({ websites }: { websites: AdminWebsite[] }) {
 
   return (
     <div className="border-2 border-border rounded-none overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow className="border-b-2 border-border hover:bg-transparent">
-            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.title')}</TableHead>
-            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.url')}</TableHead>
-            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.category')}</TableHead>
-            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.submittedBy')}</TableHead>
-            <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.status')}</TableHead>
-            <TableHead className="text-right font-mono uppercase tracking-widest text-xs">{t('table.actions')}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {websites.map((website) => (
-            <TableRow key={website.id} className="border-b border-border hover:bg-muted">
-              <TableCell className="font-bold font-mono">{website.title}</TableCell>
-              <TableCell className="max-w-[200px] truncate font-mono text-xs text-muted-foreground" title={website.url}>
-                {website.url}
-              </TableCell>
-              <TableCell>{getCategoryName(website.category)}</TableCell>
-              <TableCell className="font-mono text-xs">{website.submittedBy?.name || t('table.unknown')}</TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    website.status === 'APPROVED' ? 'default' :
-                    website.status === 'PENDING' ? 'secondary' : 'destructive'
-                  }
-                  className="font-mono"
-                >
-                  {t(`status.${website.status}`)}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-right">
-                <WebsiteActions websiteId={website.id} status={website.status} />
-              </TableCell>
+        <Table>
+          <TableHeader>
+            <TableRow className="border-b-2 border-border hover:bg-transparent">
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.title')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.url')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.category')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.submittedBy')}</TableHead>
+              <TableHead className="font-mono uppercase tracking-widest text-xs">{t('table.status')}</TableHead>
+              <TableHead className="text-right font-mono uppercase tracking-widest text-xs">{t('table.actions')}</TableHead>
             </TableRow>
-          ))}
-          {websites.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-mono">
-                <span className="text-accent">{'//'}</span> {t('table.empty')}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+          </TableHeader>
+          <TableBody>
+            {websites.map((website) => (
+              <TableRow key={website.id} className="border-b border-border hover:bg-muted">
+                <TableCell className="font-bold font-mono">{website.title}</TableCell>
+                <TableCell className="max-w-[200px] truncate font-mono text-xs text-muted-foreground" title={website.url}>
+                  {website.url}
+                </TableCell>
+                <TableCell>{getCategoryName(website.category)}</TableCell>
+                <TableCell className="font-mono text-xs">{website.submittedBy?.name || t('table.unknown')}</TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      website.status === 'APPROVED' ? 'default' :
+                      website.status === 'PENDING' ? 'secondary' : 'destructive'
+                    }
+                    className="font-mono"
+                  >
+                    {t(`status.${website.status}`)}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-right">
+                  <WebsiteActions websiteId={website.id} status={website.status} />
+                </TableCell>
+              </TableRow>
+            ))}
+            {websites.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-mono">
+                  <span className="text-accent">{'//'}</span> {t('table.empty')}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
   )
 }
 
@@ -151,6 +152,11 @@ export default async function AdminPage() {
           <WebsiteTable websites={pendingWebsites} />
         </TabsContent>
         <TabsContent value="all" className="space-y-4">
+          <div className="flex justify-end">
+            <AdminWebsiteCreator
+              categories={categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug }))}
+            />
+          </div>
           <WebsiteTable websites={allWebsites} />
         </TabsContent>
         <TabsContent value="categories" className="space-y-4">

@@ -214,11 +214,11 @@ export function SubmitForm({ categories }: SubmitFormProps) {
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="bg-background border-input">
+                    <SelectTrigger className="bg-background border-input w-full">
                       <SelectValue placeholder={t('form.categoryPlaceholder')} />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-popover">
                     {categories.map((category) => (
                       <SelectItem key={category.id} value={category.id}>
                         {category.name}

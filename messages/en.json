@@ -109,7 +109,8 @@
       "delete": "Delete",
       "edit": "Edit",
       "create": "Create Category",
-      "createFriendLink": "Add Friend Link"
+      "createFriendLink": "Add Friend Link",
+      "createWebsite": "Add Website"
     },
     "toast": {
       "approveSuccess": "Website approved successfully",
@@ -121,7 +122,8 @@
       "categoryDeleted": "Category deleted successfully",
       "friendLinkCreated": "Friend link created",
       "friendLinkUpdated": "Friend link updated",
-      "friendLinkDeleted": "Friend link deleted"
+      "friendLinkDeleted": "Friend link deleted",
+      "websiteCreated": "Website added and published"
     },
     "categoryForm": {
       "title": "Category",
