@@ -110,6 +110,9 @@ export function FriendLinkManager({ initialLinks }: FriendLinkManagerProps) {
         if (!res.ok) {
           throw new Error(await res.text())
         }
+        const updated: FriendLink = await res.json()
+        // Update local state directly so the list reflects the change immediately
+        setLinks(prev => prev.map(l => l.id === updated.id ? updated : l))
         toast.success(t('toast.friendLinkUpdated'))
       } else {
         const res = await fetch('/api/admin/friendlinks', {
@@ -120,11 +123,15 @@ export function FriendLinkManager({ initialLinks }: FriendLinkManagerProps) {
         if (!res.ok) {
           throw new Error(await res.text())
         }
+        const created: FriendLink = await res.json()
+        // Prepend new link to local state so the list updates immediately
+        setLinks(prev => [created, ...prev])
         toast.success(t('toast.friendLinkCreated'))
       }
 
       setIsDialogOpen(false)
       resetForm()
+      // Still call router.refresh() in case other server-rendered data depends on this change
       router.refresh()
     } catch (error) {
       toast.error(error instanceof Error ? error.message : t('toast.error'))
