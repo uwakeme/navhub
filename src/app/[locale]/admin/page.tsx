@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { WebsiteActions } from "@/components/admin/website-actions"
 import { CategoryManager } from "@/components/admin/category-manager"
+import { FriendLinkManager } from "@/components/admin/friend-link-manager"
 import { Metadata } from "next"
 import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
@@ -100,7 +101,7 @@ export default async function AdminPage() {
 
   const t = await getTranslations('Admin')
 
-  const [pendingWebsites, allWebsites, categories] = await Promise.all([
+  const [pendingWebsites, allWebsites, categories, friendLinks] = await Promise.all([
     prisma.website.findMany({
       where: { status: 'PENDING' },
       include: { category: true, submittedBy: true },
@@ -118,6 +119,9 @@ export default async function AdminPage() {
           select: { websites: true }
         }
       }
+    }),
+    prisma.friendLink.findMany({
+      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     })
   ])
 
@@ -141,6 +145,7 @@ export default async function AdminPage() {
           </TabsTrigger>
           <TabsTrigger value="all">{t('tabs.all')}</TabsTrigger>
           <TabsTrigger value="categories">{t('tabs.categories')}</TabsTrigger>
+          <TabsTrigger value="friendLinks">{t('tabs.friendLinks')}</TabsTrigger>
         </TabsList>
         <TabsContent value="pending" className="space-y-4">
           <WebsiteTable websites={pendingWebsites} />
@@ -150,6 +155,9 @@ export default async function AdminPage() {
         </TabsContent>
         <TabsContent value="categories" className="space-y-4">
           <CategoryManager initialCategories={categories} />
+        </TabsContent>
+        <TabsContent value="friendLinks" className="space-y-4">
+          <FriendLinkManager initialLinks={friendLinks} />
         </TabsContent>
       </Tabs>
     </div>

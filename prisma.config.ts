@@ -15,7 +15,10 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    // Use DATABASE_URL by default, but allow override via environment variable
-    url: process.env.DATABASE_URL || env("DATABASE_URL"),
+    // CLI commands (migrate / db push / introspect) MUST use a direct
+    // connection — Supabase's port 6543 is a transaction-mode pgBouncer
+    // pooler that does not support advisory locks or prepared statements.
+    // Runtime Prisma Client will still pick up DATABASE_URL from schema.prisma.
+    url: process.env.DIRECT_URL || env("DIRECT_URL"),
   },
 });

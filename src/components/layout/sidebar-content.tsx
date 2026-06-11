@@ -101,6 +101,14 @@ export function SidebarContent({ categories, currentCategory }: SidebarContentPr
               <Icons.Heart className="mr-2 h-4 w-4" />
               {t('favorites') || '我的收藏'}
             </Link>
+            <Link
+              href="/links"
+              className="flex items-center px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted hover:text-accent transition-colors border-l-2 border-l-transparent hover:border-l-accent group"
+            >
+              <span className="mr-3 font-mono text-xs opacity-70">{`>>`}</span>
+              <Icons.Link2 className="mr-2 h-4 w-4" />
+              {t('friendLinks') || '友情链接'}
+            </Link>
           </div>
         </div>
 

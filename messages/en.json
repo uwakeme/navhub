@@ -20,7 +20,8 @@
     "all": "All",
     "quickLinks": "Quick Links",
     "submit": "Submit Website",
-    "favorites": "My Favorites"
+    "favorites": "My Favorites",
+    "friendLinks": "Friend Links"
   },
   "Categories": {
     "ai-tools": "AI Tools",
@@ -77,7 +78,8 @@
       "pending": "Pending Approval",
       "all": "All Websites",
       "pendingCount": "Pending Approval ({count})",
-      "categories": "Categories"
+      "categories": "Categories",
+      "friendLinks": "Friend Links"
     },
     "table": {
       "title": "Title",
@@ -93,7 +95,8 @@
       "description": "Description",
       "icon": "Icon",
       "order": "Order",
-      "websitesCount": "Websites"
+      "websitesCount": "Websites",
+      "emptyFriendLinks": "No friend links added yet"
     },
     "status": {
       "APPROVED": "Approved",
@@ -105,7 +108,8 @@
       "reject": "Reject",
       "delete": "Delete",
       "edit": "Edit",
-      "create": "Create Category"
+      "create": "Create Category",
+      "createFriendLink": "Add Friend Link"
     },
     "toast": {
       "approveSuccess": "Website approved successfully",
@@ -114,7 +118,10 @@
       "error": "Something went wrong",
       "categoryCreated": "Category created successfully",
       "categoryUpdated": "Category updated successfully",
-      "categoryDeleted": "Category deleted successfully"
+      "categoryDeleted": "Category deleted successfully",
+      "friendLinkCreated": "Friend link created",
+      "friendLinkUpdated": "Friend link updated",
+      "friendLinkDeleted": "Friend link deleted"
     },
     "categoryForm": {
       "title": "Category",
@@ -124,11 +131,39 @@
       "iconPlaceholder": "Icon name (e.g. Brain)",
       "cancel": "Cancel",
       "save": "Save"
+    },
+    "friendLinkForm": {
+      "title": "Friend Link",
+      "name": "Name",
+      "namePlaceholder": "e.g. Alice's Blog",
+      "url": "URL",
+      "urlPlaceholder": "https://example.com",
+      "description": "Description",
+      "descriptionPlaceholder": "Brief description of the site...",
+      "favicon": "Favicon URL",
+      "faviconPlaceholder": "Leave empty to auto-fetch",
+      "ownerName": "Owner",
+      "ownerNamePlaceholder": "e.g. Alice",
+      "ownerUrl": "Owner URL",
+      "ownerUrlPlaceholder": "Optional - owner's homepage",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive"
     }
   },
   "Favorites": {
     "title": "My Favorites",
     "empty": "You haven't favorited any websites yet."
+  },
+  "FriendLinks": {
+    "title": "Friend Links",
+    "description": "NavHub's mutual link partners — sites run by friends of the project",
+    "found": "{count} {count, plural, =1 {friend} other {friends}} connected",
+    "empty": "No friend links yet",
+    "emptyHint": "If you'd like to exchange links, please contact the admin",
+    "aboutTitle": "about mutual links",
+    "aboutBody": "This page collects small sites run by friends of the project. If you'd like to exchange links, please link back to NavHub on your site first, then contact the admin via email or a GitHub Issue. Approved links will appear here.",
+    "footerNote": "friends.roll — connected, open, building together"
   },
   "Disclaimer": {
     "title": "Disclaimer & Terms of Use",

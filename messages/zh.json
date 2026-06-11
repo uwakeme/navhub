@@ -20,7 +20,8 @@
     "all": "全部",
     "quickLinks": "快速链接",
     "submit": "提交网站",
-    "favorites": "我的收藏"
+    "favorites": "我的收藏",
+    "friendLinks": "友情链接"
   },
   "Categories": {
     "ai-tools": "AI 工具",
@@ -78,7 +79,8 @@
       "pending": "待审核",
       "all": "所有网站",
       "pendingCount": "待审核 ({count})",
-      "categories": "分类管理"
+      "categories": "分类管理",
+      "friendLinks": "友链管理"
     },
     "table": {
       "title": "标题",
@@ -94,7 +96,8 @@
       "description": "描述",
       "icon": "图标",
       "order": "排序",
-      "websitesCount": "网站数"
+      "websitesCount": "网站数",
+      "emptyFriendLinks": "还没有添加友链"
     },
     "status": {
       "APPROVED": "已通过",
@@ -106,7 +109,8 @@
       "reject": "拒绝",
       "delete": "删除",
       "edit": "编辑",
-      "create": "新建分类"
+      "create": "新建分类",
+      "createFriendLink": "新建友链"
     },
     "toast": {
       "approveSuccess": "网站已通过审核",
@@ -115,7 +119,10 @@
       "error": "出错了",
       "categoryCreated": "分类创建成功",
       "categoryUpdated": "分类更新成功",
-      "categoryDeleted": "分类删除成功"
+      "categoryDeleted": "分类删除成功",
+      "friendLinkCreated": "友链已创建",
+      "friendLinkUpdated": "友链已更新",
+      "friendLinkDeleted": "友链已删除"
     },
     "categoryForm": {
       "title": "分类",
@@ -125,11 +132,39 @@
       "iconPlaceholder": "图标名称（例如：Brain）",
       "cancel": "取消",
       "save": "保存"
+    },
+    "friendLinkForm": {
+      "title": "友链",
+      "name": "名称",
+      "namePlaceholder": "例如：张三的小站",
+      "url": "链接",
+      "urlPlaceholder": "https://example.com",
+      "description": "描述",
+      "descriptionPlaceholder": "简要描述这个站点...",
+      "favicon": "Favicon URL",
+      "faviconPlaceholder": "留空将自动获取",
+      "ownerName": "站长",
+      "ownerNamePlaceholder": "例如：张三",
+      "ownerUrl": "站长主页",
+      "ownerUrlPlaceholder": "可选 - 站长个人主页",
+      "status": "状态",
+      "active": "已启用",
+      "inactive": "已停用"
     }
   },
   "Favorites": {
     "title": "我的收藏",
     "empty": "你还没有收藏任何网站。"
+  },
+  "FriendLinks": {
+    "title": "友情链接",
+    "description": "NavHub 互链伙伴 — 站长朋友们的小宇宙",
+    "found": "共 {count} 位友邻",
+    "empty": "暂无友链",
+    "emptyHint": "如果有互链意愿,请联系站长",
+    "aboutTitle": "关于互链",
+    "aboutBody": "这里收录了站长朋友们的小站。如果你也想互链,先把本站的友链挂到你的网站上,然后通过邮件或 GitHub Issue 联系站长,审核通过后会出现在这里。",
+    "footerNote": "friends.roll — 互联,开放,共建"
   },
   "Disclaimer": {
     "title": "免责声明与使用条款",

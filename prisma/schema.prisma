@@ -123,11 +123,28 @@ model Favorite {
 
   userId    String
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   websiteId String
   website   Website @relation(fields: [websiteId], references: [id], onDelete: Cascade)
 
   @@unique([userId, websiteId])
   @@index([userId])
   @@index([websiteId])
+}
+
+// Friend links - manual curated backlinks / 友情链接
+model FriendLink {
+  id          String   @id @default(cuid())
+  name        String
+  url         String   @unique
+  description String?
+  favicon     String?
+  ownerName   String?  // 网站主理人/owner (e.g. "Jelly")
+  ownerUrl    String?  // 主理人主页 (optional)
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive, order])
 }
