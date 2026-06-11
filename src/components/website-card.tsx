@@ -67,12 +67,12 @@ export function WebsiteCard({ website, isFavorited: initialFavorited = false, in
     <Card
       className={cn(
         "group relative flex flex-col h-full rounded-none border-2 border-border bg-background",
-        "hover:border-accent hover:bg-muted transition-colors duration-150",
+        "hover:border-accent hover:-translate-y-0.5",
+        "hover:shadow-[4px_4px_0_0_var(--accent)]",
+        "transition-all duration-150 ease-out",
         "shadow-none"
       )}
     >
-      {/* Top accent line — appears on hover */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200" />
 
       <CardHeader className="flex-row gap-4 items-start space-y-0 pb-3 relative z-10 pointer-events-none px-5 pt-5">
         <div
