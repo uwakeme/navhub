@@ -53,12 +53,12 @@ export default async function FriendLinksPage() {
       </div>
 
       {/* Intro / How to apply */}
-      <div className="border-2 border-border bg-foreground text-background p-5 font-mono text-xs leading-relaxed">
+      <div className="border-2 border-foreground bg-foreground text-background p-5 font-mono text-xs leading-relaxed">
         <div className="flex items-start gap-3">
           <span className="text-accent text-base shrink-0">{'$'}</span>
           <div className="space-y-2">
-            <p className="uppercase tracking-widest text-accent">{'// '}{t('aboutTitle')}</p>
-            <p className="opacity-90">{t('aboutBody')}</p>
+            <p className="uppercase tracking-widest text-background">{'// '}{t('aboutTitle')}</p>
+            <p className="text-background/80">{t('aboutBody')}</p>
           </div>
         </div>
       </div>
