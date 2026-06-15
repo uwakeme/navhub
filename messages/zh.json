@@ -152,6 +152,53 @@
       "status": "状态",
       "active": "已启用",
       "inactive": "已停用"
+    },
+    "bulkImport": {
+      "trigger": "批量导入书签",
+      "title": "从浏览器书签批量导入",
+      "description": "支持 Chrome / Edge / Firefox / Safari 导出的标准 HTML 书签文件。导入后默认为已上架状态。",
+      "dropzone": "点击或拖拽 HTML 书签文件到这里",
+      "dropzoneHint": "支持 .html / .htm 格式,最大 5MB",
+      "parsing": "正在解析书签...",
+      "checking": "正在检查重复...",
+      "submitting": "正在导入...",
+      "bulkCategory": "批量设置分类:",
+      "bulkCategoryPlaceholder": "选择分类",
+      "selectCategory": "选择分类",
+      "col": {
+        "title": "标题",
+        "url": "URL / 描述",
+        "category": "分类"
+      },
+      "descPlaceholder": "描述(可选)",
+      "existingHint": "已存在(当前标题: {current}) — 留选将更新元数据",
+      "empty": "没有可导入的书签",
+      "stats": {
+        "total": "共 {count}",
+        "selected": "已选 {count}",
+        "existing": "已存在 {count}"
+      },
+      "cleanup": "清掉未选分类的",
+      "cleanupHint": "移除未选择分类的行",
+      "reupload": "重新选择文件",
+      "confirmImport": "确认导入 ({count})",
+      "close": "完成",
+      "doneTitle": "导入完成",
+      "doneCreated": "新增 {count} 条",
+      "doneUpdated": "更新 {count} 条",
+      "doneSkipped": "跳过 {count} 条(无效数据)",
+      "errors": {
+        "notHtml": "请上传 .html 或 .htm 格式的书签文件",
+        "tooBig": "文件超过 5MB 限制",
+        "noBookmarks": "未能解析出有效的书签(共扫描到 {total} 个链接,跳过 {skipped} 个无效)"
+      },
+      "toast": {
+        "parsed": "解析成功,共 {count} 条(已自动去重,跳过 {skipped} 条无效)",
+        "checkFailed": "重复检查失败,继续预览",
+        "noneSelected": "请至少选择一条要导入的书签",
+        "missingCategory": "有 {count} 条选中的书签未选择分类,请补全",
+        "importDone": "导入完成:新增 {created} 条,更新 {updated} 条"
+      }
     }
   },
   "Favorites": {

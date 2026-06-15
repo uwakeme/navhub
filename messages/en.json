@@ -151,6 +151,53 @@
       "status": "Status",
       "active": "Active",
       "inactive": "Inactive"
+    },
+    "bulkImport": {
+      "trigger": "Bulk Import Bookmarks",
+      "title": "Import from Browser Bookmarks",
+      "description": "Supports standard HTML bookmark files exported by Chrome / Edge / Firefox / Safari. Imported items are published immediately.",
+      "dropzone": "Click or drag an HTML bookmark file here",
+      "dropzoneHint": "Accepts .html / .htm up to 5MB",
+      "parsing": "Parsing bookmarks...",
+      "checking": "Checking for duplicates...",
+      "submitting": "Importing...",
+      "bulkCategory": "Bulk set category:",
+      "bulkCategoryPlaceholder": "Select category",
+      "selectCategory": "Select category",
+      "col": {
+        "title": "Title",
+        "url": "URL / Description",
+        "category": "Category"
+      },
+      "descPlaceholder": "Description (optional)",
+      "existingHint": "Already exists (current title: {current}) — leaving selected will update metadata",
+      "empty": "No bookmarks to import",
+      "stats": {
+        "total": "{count} total",
+        "selected": "{count} selected",
+        "existing": "{count} existing"
+      },
+      "cleanup": "Drop rows without category",
+      "cleanupHint": "Remove rows that haven't picked a category",
+      "reupload": "Choose another file",
+      "confirmImport": "Import {count}",
+      "close": "Done",
+      "doneTitle": "Import complete",
+      "doneCreated": "{count} created",
+      "doneUpdated": "{count} updated",
+      "doneSkipped": "{count} skipped (invalid)",
+      "errors": {
+        "notHtml": "Please upload a .html or .htm bookmark file",
+        "tooBig": "File exceeds 5MB limit",
+        "noBookmarks": "No valid bookmarks found (scanned {total} links, skipped {skipped})"
+      },
+      "toast": {
+        "parsed": "Parsed {count} bookmarks (deduplicated, skipped {skipped} invalid)",
+        "checkFailed": "Duplicate check failed, continuing with preview",
+        "noneSelected": "Please select at least one bookmark to import",
+        "missingCategory": "{count} selected bookmarks are missing a category",
+        "importDone": "Import done: {created} created, {updated} updated"
+      }
     }
   },
   "Favorites": {

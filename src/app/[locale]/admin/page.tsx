@@ -17,6 +17,7 @@ import { WebsiteActions } from "@/components/admin/website-actions"
 import { CategoryManager } from "@/components/admin/category-manager"
 import { FriendLinkManager } from "@/components/admin/friend-link-manager"
 import { AdminWebsiteCreator } from "@/components/admin/website-creator"
+import { AdminBulkImport } from "@/components/admin/bulk-import"
 import { Metadata } from "next"
 import { Prisma } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
@@ -152,7 +153,10 @@ export default async function AdminPage() {
           <WebsiteTable websites={pendingWebsites} />
         </TabsContent>
         <TabsContent value="all" className="space-y-4">
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            <AdminBulkImport
+              categories={categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug }))}
+            />
             <AdminWebsiteCreator
               categories={categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug }))}
             />
